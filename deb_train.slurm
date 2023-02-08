@@ -24,8 +24,8 @@ eval "$(conda shell.bash hook)"
 conda activate ds2
 
 python3 -m demo.demo --config-file configs/COCO-detection/faster_rcnn_R_101_FPN_ft_all_1shot.yaml \
-  --opts MODEL.WEIGHTS fsdet://coco/tfa_cos_1shot/model_final.pth \
   --input mvtec_image_for_demo/005.png \
+  --opts MODEL.WEIGHTS fsdet://coco/tfa_cos_1shot/model_final.pth \
   --output mvtec_demo_result/result_005.png
 
 ##Log this job's resource usage stats###
