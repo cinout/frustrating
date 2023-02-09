@@ -21,7 +21,7 @@
 module purge
 
 eval "$(conda shell.bash hook)"
-conda activate ds2
+conda activate frust
 
 python3 -m demo.demo --config-file configs/COCO-detection/faster_rcnn_R_101_FPN_ft_all_1shot.yaml \
   --input mvtec_image_for_demo/005.png \
