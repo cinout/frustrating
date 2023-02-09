@@ -24,7 +24,7 @@ eval "$(conda shell.bash hook)"
 conda activate frust
 
 python3 -m demo.demo --config-file configs/COCO-detection/faster_rcnn_R_101_FPN_ft_all_1shot.yaml \
-  --input mvtec_image_for_demo/005.png \
+  --input mvtec_image_for_demo/breakfast_007.png mvtec_image_for_demo/juice_009.png mvtec_image_for_demo/pushpin_012.png mvtec_image_for_demo/screw_003.png mvtec_image_for_demo/splice_025.png \
   --output mvtec_demo_result \
   --opts MODEL.WEIGHTS pretrained_models/model_final.pth \
 
