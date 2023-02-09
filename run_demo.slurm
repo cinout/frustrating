@@ -8,7 +8,7 @@
 
 #SBATCH --job-name="demo"
 #SBATCH --account=punim1623
-#SBATCH --time=0-02:00:00
+#SBATCH --time=0-00:05:00
 
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
