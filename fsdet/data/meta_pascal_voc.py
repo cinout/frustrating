@@ -15,13 +15,15 @@ def load_filtered_voc_instances(
     """
     Load Pascal VOC detection annotations to Detectron2 format.
     Args:
-        dirname: Contain "Annotations", "ImageSets", "JPEGImages"
+        dirname: Contain "Annotations", "ImageSets", "JPEGImages" #TODO: for base training only
         split (str): one of "train", "test", "val", "trainval"
     """
     is_shots = "shot" in name
     if is_shots:
         fileids = {}
-        split_dir = os.path.join("datasets", "vocsplit")
+        split_dir = os.path.join(
+            "datasets", "vocsplit"
+        )  # TODO: refer to http://dl.yf.io/fs-det/
         if "seed" in name:
             shot = name.split("_")[-2].split("shot")[0]
             seed = int(name.split("_seed")[-1])
@@ -39,16 +41,19 @@ def load_filtered_voc_instances(
                     fileids_ = [fileids_]
                 fileids_ = [
                     fid.split("/")[-1].split(".jpg")[0] for fid in fileids_
-                ]
-                fileids[cls] = fileids_
+                ]  # TODO: list of image file ids without .jpg suffix
+                fileids[
+                    cls
+                ] = fileids_  # TODO: dictionary, with "key" of classname
     else:
         with PathManager.open(
             os.path.join(dirname, "ImageSets", "Main", split + ".txt")
         ) as f:
-            fileids = np.loadtxt(f, dtype=np.str)
+            fileids = np.loadtxt(f, dtype=np.str)  # TODO: image file ids
 
     dicts = []
     if is_shots:
+        # TODO: few shot fine tuning
         for cls, fileids_ in fileids.items():
             dicts_ = []
             for fileid in fileids_:
@@ -72,13 +77,14 @@ def load_filtered_voc_instances(
                     }
                     cls_ = obj.find("name").text
                     if cls != cls_:
+                        # TODO: the object does not belong to the cls
                         continue
                     bbox = obj.find("bndbox")
                     bbox = [
                         float(bbox.find(x).text)
                         for x in ["xmin", "ymin", "xmax", "ymax"]
                     ]
-                    bbox[0] -= 1.0
+                    bbox[0] -= 1.0  # TODO: what is this -1.0 for?
                     bbox[1] -= 1.0
 
                     instances = [
@@ -91,9 +97,12 @@ def load_filtered_voc_instances(
                     r["annotations"] = instances
                     dicts_.append(r)
             if len(dicts_) > int(shot):
-                dicts_ = np.random.choice(dicts_, int(shot), replace=False)
+                dicts_ = np.random.choice(
+                    dicts_, int(shot), replace=False
+                )  # TODO: "replace=False" means one value can be selected only once
             dicts.extend(dicts_)
     else:
+        # TODO: base training
         for fileid in fileids:
             anno_file = os.path.join(dirname, "Annotations", fileid + ".xml")
             jpeg_file = os.path.join(dirname, "JPEGImages", fileid + ".jpg")
@@ -142,13 +151,15 @@ def register_meta_pascal_voc(
     elif keepclasses.startswith("novel"):
         thing_classes = metadata["novel_classes"][sid]
 
+    # TODO: register dataset (step 1)
     DatasetCatalog.register(
-        name,
+        name,  # TODO: name of dataset, this will be used in the config file
         lambda: load_filtered_voc_instances(
             name, dirname, split, thing_classes
-        ),
+        ),  # TODO: call your dataset loader to get the data
     )
 
+    # TODO: register meta information (step 2)
     MetadataCatalog.get(name).set(
         thing_classes=thing_classes,
         dirname=dirname,

@@ -14,19 +14,22 @@ def parse_args():
 
 
 def generate_seeds(args):
-    data_path = "datasets/cocosplit/datasplit/trainvalno5k.json"
+    data_path = "datasets/cocosplit/datasplit/trainvalno5k.json"  # TODO: hard-coded file, found at http://dl.yf.io/fs-det/datasets/cocosplit/datasplit, default COCO annotation format
     data = json.load(open(data_path))
 
     new_all_cats = []
     for cat in data["categories"]:
+        # TODO: "cat" example: {"supercategory": "person", "id": 1, "name": "person"}
         new_all_cats.append(cat)
 
     id2img = {}
     for i in data["images"]:
+        # TODO: "i" example: {"license": 3, "file_name": "COCO_val2014_000000554625.jpg", "coco_url": "http://images.cocodataset.org/val2014/COCO_val2014_000000554625.jpg", "height": 640, "width": 426, "date_captured": "2013-11-14 16:03:19", "flickr_url": "http://farm5.staticflickr.com/4086/5094162993_8f59d8a473_z.jpg", "id": 554625}
         id2img[i["id"]] = i
 
     anno = {i: [] for i in ID2CLASS.keys()}
     for a in data["annotations"]:
+        # TODO: "a" example: {"segmentation": [[263.59, ..., 206.92]], "area": 13203.3917, "iscrowd": 0, "image_id": 194306, "bbox": [232.68, 103.89, 183.73, 103.03], "category_id": 18, "id": 2496}
         if a["iscrowd"] == 1:
             continue
         anno[a["category_id"]].append(a)
@@ -167,7 +170,7 @@ if __name__ == "__main__":
         89: "hair drier",
         90: "toothbrush",
     }
-    CLASS2ID = {v: k for k, v in ID2CLASS.items()}
+    CLASS2ID = {v: k for k, v in ID2CLASS.items()}  # TODO: {name: id}
 
     args = parse_args()
     generate_seeds(args)

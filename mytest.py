@@ -1,4 +1,5 @@
 import os
 
 
-print(os.path.isdir("mvtec_demo_result"))
+fu = ["gkass", "gkass", "too"]
+print(set(fu))

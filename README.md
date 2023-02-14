@@ -1,4 +1,5 @@
 # Few-Shot Object Detection (FsDet)
+
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/ucbdrive/few-shot-object-detection.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ucbdrive/few-shot-object-detection/context:python)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
@@ -26,11 +27,11 @@ If you find this repository useful for your publications, please consider citing
 ```
 
 ## Updates
-- (Oct 2020) The code has been upgraded to detectron2 v0.2.1.  If you need the original released code, please checkout the release [v0.1](https://github.com/ucbdrive/few-shot-object-detection/tags) in the tag.
 
-
+- (Oct 2020) The code has been upgraded to detectron2 v0.2.1. If you need the original released code, please checkout the release [v0.1](https://github.com/ucbdrive/few-shot-object-detection/tags) in the tag.
 
 ## Table of Contents
+
 - [Few-Shot Object Detection (FsDet)](#few-shot-object-detection-fsdet)
   - [Updates](#updates)
   - [Table of Contents](#table-of-contents)
@@ -40,52 +41,64 @@ If you find this repository useful for your publications, please consider citing
   - [Models](#models)
   - [Getting Started](#getting-started)
     - [Inference Demo with Pre-trained Models](#inference-demo-with-pre-trained-models)
-    - [Training & Evaluation in Command Line](#training--evaluation-in-command-line)
+    - [Training \& Evaluation in Command Line](#training--evaluation-in-command-line)
     - [Multiple Runs](#multiple-runs)
-
 
 ## Installation
 
 **Requirements**
 
-* Linux with Python >= 3.6
-* [PyTorch](https://pytorch.org/get-started/locally/) >= 1.4
-* [torchvision](https://github.com/pytorch/vision/) that matches the PyTorch installation
-* CUDA 9.2, 10.0, 10.1, 10.2, 11.0
-* GCC >= 4.9
+- Linux with Python >= 3.6
+- [PyTorch](https://pytorch.org/get-started/locally/) >= 1.4
+- [torchvision](https://github.com/pytorch/vision/) that matches the PyTorch installation
+- CUDA 9.2, 10.0, 10.1, 10.2, 11.0
+- GCC >= 4.9
 
 **Build FsDet**
-* Create a virtual environment.
+
+- Create a virtual environment.
+
 ```angular2html
 python3 -m venv fsdet
 source fsdet/bin/activate
 ```
+
 You can also use `conda` to create a new environment.
+
 ```angular2html
 conda create --name fsdet
 conda activate fsdet
 ```
-* Install PyTorch. You can choose the PyTorch and CUDA version according to your machine. Just make sure your PyTorch version matches the prebuilt Detectron2 version (next step). Example for PyTorch v1.6.0:
+
+- Install PyTorch. You can choose the PyTorch and CUDA version according to your machine. Just make sure your PyTorch version matches the prebuilt Detectron2 version (next step). Example for PyTorch v1.6.0:
+
 ```angular2html
 pip install torch==1.6.0 torchvision==0.7.0
 ```
+
 Currently, the codebase is compatible with [Detectron2 v0.2.1](https://github.com/facebookresearch/detectron2/releases/tag/v0.2.1), [Detectron2 v0.3](https://github.com/facebookresearch/detectron2/releases/tag/v0.3), and [Detectron2 v0.4](https://github.com/facebookresearch/detectron2/releases/tag/v0.4). Tags correspond to the exact version of Detectron2 that is supported. To checkout the right tag (example for Detectron2 v0.3):
+
 ```bash
 git checkout v0.3
 ```
 
 To install depedencies (example for PyTorch v1.6.0, CUDA v10.2, Detectron2 v0.3):
-* Install Detectron2 v0.3
+
+- Install Detectron2 v0.3
+
 ```angular2html
 python3 -m pip install detectron2==0.3 -f \
   https://dl.fbaipublicfiles.com/detectron2/wheels/cu102/torch1.6/index.html
 ```
-* Install other requirements.
+
+- Install other requirements.
+
 ```angular2html
 python3 -m pip install -r requirements.txt
 ```
 
 ## Code Structure
+
 - **configs**: Configuration files
 - **datasets**: Dataset files (see [Data Preparation](#data-preparation) for more details)
 - **fsdet**
@@ -101,9 +114,10 @@ python3 -m pip install -r requirements.txt
   - **run_experiments.py**: Running experiments across many seeds.
   - **aggregate_seeds.py**: Aggregating results from many seeds.
 
-
 ## Data Preparation
+
 We evaluate our models on three datasets:
+
 - [PASCAL VOC](http://host.robots.ox.ac.uk/pascal/VOC/): We use the train/val sets of PASCAL VOC 2007+2012 for training and the test set of PASCAL VOC 2007 for evaluation. We randomly split the 20 object classes into 15 base classes and 5 novel classes, and we consider 3 random splits. The splits can be found in [fsdet/data/builtin_meta.py](fsdet/data/builtin_meta.py).
 - [COCO](http://cocodataset.org/): We use COCO 2014 and extract 5k images from the val set for evaluation and use the rest for training. We use the 20 object classes that are the same with PASCAL VOC as novel classes and use the rest as base classes.
 - [LVIS](https://www.lvisdataset.org/): We treat the frequent and common classes as the base classes and the rare categories as the novel classes.
@@ -113,42 +127,47 @@ See [datasets/README.md](datasets/README.md) for more details.
 If you would like to use your own custom dataset, see [CUSTOM.md](docs/CUSTOM.md) for instructions. If you would like to contribute your custom dataset to our codebase, feel free to open a PR.
 
 ## Models
-We provide a set of benchmark results and pre-trained models available for download in [MODEL_ZOO.md](docs/MODEL_ZOO.md).
 
+We provide a set of benchmark results and pre-trained models available for download in [MODEL_ZOO.md](docs/MODEL_ZOO.md).
 
 ## Getting Started
 
 ### Inference Demo with Pre-trained Models
 
 1. Pick a model and its config file from
-  [model zoo](fsdet/model_zoo/model_zoo.py),
-  for example, `COCO-detection/faster_rcnn_R_101_FPN_ft_all_1shot.yaml`.
+   [model zoo](fsdet/model_zoo/model_zoo.py),
+   for example, `COCO-detection/faster_rcnn_R_101_FPN_ft_all_1shot.yaml`.
 2. We provide `demo.py` that is able to run builtin standard models. Run it with:
+
 ```
 python3 -m demo.demo --config-file configs/COCO-detection/faster_rcnn_R_101_FPN_ft_all_1shot.yaml \
   --input input1.jpg input2.jpg \
   [--other-options]
   --opts MODEL.WEIGHTS fsdet://coco/tfa_cos_1shot/model_final.pth
 ```
+
 The configs are made for training, therefore we need to specify `MODEL.WEIGHTS` to a model from model zoo for evaluation.
 This command will run the inference and show visualizations in an OpenCV window.
 
 For details of the command line arguments, see `demo.py -h` or look at its source code
 to understand its behavior. Some common arguments are:
-* To run __on your webcam__, replace `--input files` with `--webcam`.
-* To run __on a video__, replace `--input files` with `--video-input video.mp4`.
-* To run __on cpu__, add `MODEL.DEVICE cpu` after `--opts`.
-* To save outputs to a directory (for images) or a file (for webcam or video), use `--output`.
+
+- To run **on your webcam**, replace `--input files` with `--webcam`.
+- To run **on a video**, replace `--input files` with `--video-input video.mp4`.
+- To run **on cpu**, add `MODEL.DEVICE cpu` after `--opts`.
+- To save outputs to a directory (for images) or a file (for webcam or video), use `--output`.
 
 ### Training & Evaluation in Command Line
 
 To train a model, run
+
 ```angular2html
 python3 -m tools.train_net --num-gpus 8 \
         --config-file configs/PascalVOC-detection/split1/faster_rcnn_R_101_FPN_base1.yaml
 ```
 
 To evaluate the trained models, run
+
 ```angular2html
 python3 -m tools.test_net --num-gpus 8 \
         --config-file configs/PascalVOC-detection/split1/faster_rcnn_R_101_FPN_ft_all1_1shot.yaml \
@@ -162,12 +181,14 @@ For more detailed instructions on the training procedure of TFA, see [TRAIN_INST
 For ease of training and evaluation over multiple runs, we provided several helpful scripts in `tools/`.
 
 You can use `tools/run_experiments.py` to do the training and evaluation. For example, to experiment on 30 seeds of the first split of PascalVOC on all shots, run
+
 ```angular2html
 python3 -m tools.run_experiments --num-gpus 8 \
         --shots 1 2 3 5 10 --seeds 0 30 --split 1
 ```
 
 After training and evaluation, you can use `tools/aggregate_seeds.py` to aggregate the results over all the seeds to obtain one set of numbers. To aggregate the 3-shot results of the above command, run
+
 ```angular2html
 python3 -m tools.aggregate_seeds --shots 3 --seeds 30 --split 1 \
         --print --plot

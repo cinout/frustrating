@@ -246,6 +246,7 @@ COCO_NOVEL_CATEGORIES = [
 ]
 
 # PASCAL VOC categories
+# TODO: 1,2,3 denotes three different splits
 PASCAL_VOC_ALL_CATEGORIES = {
     1: [
         "aeroplane",

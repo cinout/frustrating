@@ -72,7 +72,7 @@ def load_coco_json(json_file, image_root, metadata, dataset_name):
     if is_shots:
         for _, fileids_ in fileids.items():
             dicts = []
-            for (img_dict, anno_dict_list) in fileids_:
+            for img_dict, anno_dict_list in fileids_:
                 for anno in anno_dict_list:
                     record = {}
                     record["file_name"] = os.path.join(
@@ -95,7 +95,7 @@ def load_coco_json(json_file, image_root, metadata, dataset_name):
                 dicts = np.random.choice(dicts, int(shot), replace=False)
             dataset_dicts.extend(dicts)
     else:
-        for (img_dict, anno_dict_list) in imgs_anns:
+        for img_dict, anno_dict_list in imgs_anns:
             record = {}
             record["file_name"] = os.path.join(
                 image_root, img_dict["file_name"]

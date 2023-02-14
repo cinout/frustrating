@@ -38,33 +38,48 @@ def generate_seeds(args):
         clses = []
         for obj in tree.findall("object"):
             cls = obj.find("name").text
-            clses.append(cls)
+            clses.append(
+                cls
+            )  # TODO: find all classes of object in this anno_file
         for cls in set(clses):
-            data_per_cat[cls].append(anno_file)
+            data_per_cat[cls].append(
+                anno_file
+            )  # TODO: all annotation file paths by classname
 
     result = {cls: {} for cls in data_per_cat.keys()}
     shots = [1, 2, 3, 5, 10]
-    for i in range(args.seeds[0], args.seeds[1]):
+    for i in range(args.seeds[0], args.seeds[1]):  # TODO: for each seed
         random.seed(i)
-        for c in data_per_cat.keys():
+        for c in data_per_cat.keys():  # TODO: for each classname
             c_data = []
-            for j, shot in enumerate(shots):
+            for j, shot in enumerate(shots):  # TODO: for each shot number
                 diff_shot = shots[j] - shots[j - 1] if j != 0 else 1
-                shots_c = random.sample(data_per_cat[c], diff_shot)
+                shots_c = random.sample(
+                    data_per_cat[c], diff_shot
+                )  # TODO: anno file paths for additional shots #FIXME: how does it make sure it won't sample duplicate file from last loop?
                 num_objs = 0
                 for s in shots_c:
-                    if s not in c_data:
+                    print(f"s: {s}, c_data: {c_data}")
+                    if (
+                        s not in c_data
+                    ):  # FIXME: does this comparison make sense?? c_data contains image file path, while s is annotation file path
                         tree = ET.parse(s)
-                        file = tree.find("filename").text
+                        file = tree.find("filename").text  # contains suffix
                         year = tree.find("folder").text
-                        name = "datasets/{}/JPEGImages/{}".format(year, file)
+                        name = "datasets/{}/JPEGImages/{}".format(
+                            year, file
+                        )  # TODO: image file path
                         c_data.append(name)
                         for obj in tree.findall("object"):
-                            if obj.find("name").text == c:
+                            if (
+                                obj.find("name").text == c
+                            ):  # count objects for current class
                                 num_objs += 1
                         if num_objs >= diff_shot:
                             break
-                result[c][shot] = copy.deepcopy(c_data)
+                result[c][shot] = copy.deepcopy(
+                    c_data
+                )  # TODO: image file paths by (1) classname (2) #shot
         save_path = "datasets/vocsplit/seed{}".format(i)
         os.makedirs(save_path, exist_ok=True)
         for c in result.keys():

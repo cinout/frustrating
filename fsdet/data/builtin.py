@@ -7,8 +7,7 @@ We hard-code metadata for common datasets. This will enable:
 We hard-code some paths to the dataset that's assumed to
 exist in "./datasets/".
 
-Here we only register the few-shot datasets and complete COCO, PascalVOC and
-LVIS have been handled by the builtin datasets in detectron2.
+Here we only register the few-shot datasets and complete COCO, PascalVOC and LVIS have been handled by the builtin datasets in detectron2.
 """
 
 import os
@@ -226,13 +225,18 @@ def register_all_pascal_voc(root="datasets"):
         ("voc_2007_test_all3", "VOC2007", "test", "base_novel_3", 3),
     ]
 
-    # register small meta datasets for fine-tuning stage
-    for prefix in ["all", "novel"]:
-        for sid in range(1, 4):
+    # register small meta datasets for "fine-tuning stage"
+    for prefix in [
+        "all",
+        "novel",
+    ]:  # FIXME: why no "base"? (Because you either fine-tune with all classes or just novel classes)
+        for sid in range(1, 4):  # TODO: "sid" means split id
             for shot in [1, 2, 3, 5, 10]:
                 for year in [2007, 2012]:
                     for seed in range(100):
-                        seed = "" if seed == 0 else "_seed{}".format(seed)
+                        seed = (
+                            "" if seed == 0 else "_seed{}".format(seed)
+                        )  # TODO: for seed0, don't need suffix
                         name = "voc_{}_trainval_{}{}_{}shot{}".format(
                             year, prefix, sid, shot, seed
                         )
@@ -248,6 +252,13 @@ def register_all_pascal_voc(root="datasets"):
                         METASPLITS.append(
                             (name, dirname, img_file, keepclasses, sid)
                         )
+                        ###TODO: few-shot example
+                        # name: voc_2007_trainval_novel1_3shot_seed10
+                        # dirname: VOC2007
+                        # img_file: novel_3shot_split_1_trainval
+                        # keepclasses: novel1
+                        # sid: 1
+                        ###
 
     for name, dirname, split, keepclasses, sid in METASPLITS:
         year = 2007 if "2007" in name else 2012
