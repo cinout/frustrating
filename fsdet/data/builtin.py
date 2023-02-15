@@ -315,9 +315,9 @@ def register_all_mvtec_style_voc(root="datasets"):
                         seed = (
                             "" if seed == 0 else "_seed{}".format(seed)
                         )  # TODO: for seed0, don't need suffix
-                        name = "voc_{}_trainval_{}{}_{}shot{}".format(
+                        name = "mvtec_{}_trainval_{}{}_{}shot{}".format(
                             year, prefix, sid, shot, seed
-                        )  # FIXME: let's keep the name unchanged for the moment
+                        )  # FIXME: changed from "voc" to "mvtec"
                         dirname = "VOC{}".format(year)
                         file_split = "{}_{}shot_split_{}_trainval".format(
                             prefix, shot, sid
