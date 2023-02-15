@@ -377,6 +377,178 @@ PASCAL_VOC_BASE_CATEGORIES = {
 }
 
 
+MVTEC_ALL_CATEGORIES_STYLE_VOC = {
+    1: [
+        "aeroplane",
+        "bicycle",
+        "boat",
+        "bottle",
+        "car",
+        "cat",
+        "chair",
+        "diningtable",
+        "dog",
+        "horse",
+        "person",
+        "pottedplant",
+        "sheep",
+        "train",
+        "tvmonitor",
+        "bird",
+        "bus",
+        "cow",
+        "motorbike",
+        "sofa",  # FIXME: update categories
+        "nectarine",
+        "orange",
+        "cereal",
+        "almond_mix",
+    ],
+    2: [
+        "bicycle",
+        "bird",
+        "boat",
+        "bus",
+        "car",
+        "cat",
+        "chair",
+        "diningtable",
+        "dog",
+        "motorbike",
+        "person",
+        "pottedplant",
+        "sheep",
+        "train",
+        "tvmonitor",
+        "aeroplane",
+        "bottle",
+        "cow",
+        "horse",
+        "sofa",  # FIXME: update categories
+        "nectarine",
+        "orange",
+        "cereal",
+        "almond_mix",
+    ],
+    3: [
+        "aeroplane",
+        "bicycle",
+        "bird",
+        "bottle",
+        "bus",
+        "car",
+        "chair",
+        "cow",
+        "diningtable",
+        "dog",
+        "horse",
+        "person",
+        "pottedplant",
+        "train",
+        "tvmonitor",
+        "boat",
+        "cat",
+        "motorbike",
+        "sheep",
+        "sofa",  # FIXME: update categories
+        "nectarine",
+        "orange",
+        "cereal",
+        "almond_mix",
+    ],
+}
+
+MVTEC_NOVEL_CATEGORIES_STYLE_VOC = {
+    1: [
+        "bird",
+        "bus",
+        "cow",
+        "motorbike",
+        "sofa",  # FIXME: update categories
+        "nectarine",
+        "orange",
+        "cereal",
+        "almond_mix",
+    ],
+    2: [
+        "aeroplane",
+        "bottle",
+        "cow",
+        "horse",
+        "sofa",  # FIXME: update categories
+        "nectarine",
+        "orange",
+        "cereal",
+        "almond_mix",
+    ],
+    3: [
+        "boat",
+        "cat",
+        "motorbike",
+        "sheep",
+        "sofa",  # FIXME: update categories
+        "nectarine",
+        "orange",
+        "cereal",
+        "almond_mix",
+    ],
+}
+
+MVTEC_BASE_CATEGORIES_STYLE_VOC = {
+    1: [
+        "aeroplane",
+        "bicycle",
+        "boat",
+        "bottle",
+        "car",
+        "cat",
+        "chair",
+        "diningtable",
+        "dog",
+        "horse",
+        "person",
+        "pottedplant",
+        "sheep",
+        "train",
+        "tvmonitor",
+    ],
+    2: [
+        "bicycle",
+        "bird",
+        "boat",
+        "bus",
+        "car",
+        "cat",
+        "chair",
+        "diningtable",
+        "dog",
+        "motorbike",
+        "person",
+        "pottedplant",
+        "sheep",
+        "train",
+        "tvmonitor",
+    ],
+    3: [
+        "aeroplane",
+        "bicycle",
+        "bird",
+        "bottle",
+        "bus",
+        "car",
+        "chair",
+        "cow",
+        "diningtable",
+        "dog",
+        "horse",
+        "person",
+        "pottedplant",
+        "train",
+        "tvmonitor",
+    ],
+}
+
+
 def _get_coco_instances_meta():
     thing_ids = [k["id"] for k in COCO_CATEGORIES if k["isthing"] == 1]
     thing_colors = [k["color"] for k in COCO_CATEGORIES if k["isthing"] == 1]
@@ -456,6 +628,16 @@ def _get_pascal_voc_fewshot_instances_meta():
     return ret
 
 
+# FIXME: create mvtec meta
+def _get_mvtec_fewshot_instances_meta_style_voc():
+    ret = {
+        "thing_classes": MVTEC_ALL_CATEGORIES_STYLE_VOC,
+        "novel_classes": MVTEC_NOVEL_CATEGORIES_STYLE_VOC,
+        "base_classes": MVTEC_BASE_CATEGORIES_STYLE_VOC,
+    }
+    return ret
+
+
 def _get_builtin_metadata(dataset_name):
     if dataset_name == "coco":
         return _get_coco_instances_meta()
@@ -467,4 +649,7 @@ def _get_builtin_metadata(dataset_name):
         return _get_lvis_fewshot_instances_meta_v0_5()
     elif dataset_name == "pascal_voc_fewshot":
         return _get_pascal_voc_fewshot_instances_meta()
+    # FIXME: create mvtec meta
+    elif dataset_name == "mvtec_fewshot_style_voc":
+        return _get_mvtec_fewshot_instances_meta_style_voc()
     raise KeyError("No built-in metadata for dataset {}".format(dataset_name))

@@ -33,6 +33,7 @@ class PascalVOCDetectionEvaluator(DatasetEvaluator):
         """
         self._dataset_name = dataset_name
         meta = MetadataCatalog.get(dataset_name)
+
         self._anno_file_template = os.path.join(
             meta.dirname, "Annotations", "{}.xml"
         )
@@ -54,6 +55,7 @@ class PascalVOCDetectionEvaluator(DatasetEvaluator):
         )  # class name -> list of prediction strings
 
     def process(self, inputs, outputs):
+        # TODO: outputs = model(inputs)
         for input, output in zip(inputs, outputs):
             image_id = input["image_id"]
             instances = output["instances"].to(self._cpu_device)
@@ -74,7 +76,9 @@ class PascalVOCDetectionEvaluator(DatasetEvaluator):
         Returns:
             dict: has a key "segm", whose value is a dict of "AP", "AP50", and "AP75".
         """
-        all_predictions = comm.gather(self._predictions, dst=0)
+        all_predictions = comm.gather(
+            self._predictions, dst=0
+        )  # TODO: dict: class name -> list of prediction strings
         if not comm.is_main_process():
             return
         predictions = defaultdict(list)
@@ -91,6 +95,7 @@ class PascalVOCDetectionEvaluator(DatasetEvaluator):
         )
 
         with tempfile.TemporaryDirectory(prefix="pascal_voc_eval_") as dirname:
+            # TODO: example of dirname: "/var/folders/17/18jkcj3s3w3_5v9vbnz4pfpm0000gn/T/pascal_voc_eval_u2e06w88"
             res_file_template = os.path.join(dirname, "{}.txt")
 
             aps = defaultdict(list)  # iou -> ap per class
@@ -104,6 +109,7 @@ class PascalVOCDetectionEvaluator(DatasetEvaluator):
                     f.write("\n".join(lines))
 
                 for thresh in range(50, 100, 5):
+                    # TODO: thresh is 50, 55, 60, ..., 95
                     rec, prec, ap = voc_eval(
                         res_file_template,
                         self._anno_file_template,

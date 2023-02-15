@@ -1,0 +1,20 @@
+{
+  "folder": "1shot",
+  "files": [
+    {
+      "name": "breakfast_box_train_006.png",
+      "size": {
+        "width": 1600,
+        "height": 1280,
+        "depth": 3
+      },
+      "objects": [
+        { "name": "nectarine", "bbox": [140, 68, 568, 478], "mode": "XYXY" },
+        { "name": "orange", "bbox": [300, 410, 663, 753], "mode": "XYXY" },
+        { "name": "orange", "bbox": [295, 739, 698, 1126], "mode": "XYXY" },
+        { "name": "cereal", "bbox": [633, 73, 1459, 674], "mode": "XYXY" },
+        { "name": "almond_mix", "bbox": [788, 643, 1451, 1128], "mode": "XYXY" }
+      ]
+    }
+  ]
+}

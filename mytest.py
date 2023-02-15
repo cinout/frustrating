@@ -1,5 +1,8 @@
 import os
+from collections import defaultdict
+import json
+import tempfile
 
 
-fu = ["gkass", "gkass", "too"]
-print(set(fu))
+for thresh in range(50, 100, 5):
+    print(thresh)

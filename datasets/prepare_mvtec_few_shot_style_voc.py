@@ -1,3 +1,6 @@
+"""
+FIXME: This file can actually be deleted, because it is no different from "prepare_voc_few_shot.py"
+"""
 import argparse
 import copy
 import os
@@ -7,10 +10,32 @@ import xml.etree.ElementTree as ET
 import numpy as np
 from fsdet.utils.file_io import PathManager
 
-VOC_CLASSES = ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car',
-               'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse',
-               'motorbike', 'person', 'pottedplant', 'sheep', 'sofa', 'train',
-               'tvmonitor']  # fmt: skip
+VOC_CLASSES = [
+    "aeroplane",
+    "bicycle",
+    "bird",
+    "boat",
+    "bottle",
+    "bus",
+    "car",
+    "cat",
+    "chair",
+    "cow",
+    "diningtable",
+    "dog",
+    "horse",
+    "motorbike",
+    "person",
+    "pottedplant",
+    "sheep",
+    "sofa",
+    "train",
+    "tvmonitor",
+    # "nectarine",
+    # "orange",
+    # "cereal",
+    # "almond_mix",
+]  # FIXME: create new classes
 
 
 def parse_args():
@@ -44,7 +69,7 @@ def generate_seeds(args):
         for cls in set(clses):
             data_per_cat[cls].append(
                 anno_file
-            )  # TODO: all annotation file paths by classname
+            )  # FIXME: all annotation file paths by classname
 
     result = {cls: {} for cls in data_per_cat.keys()}
     shots = [1, 2, 3, 5, 10]
@@ -56,12 +81,10 @@ def generate_seeds(args):
                 diff_shot = shots[j] - shots[j - 1] if j != 0 else 1
                 shots_c = random.sample(
                     data_per_cat[c], diff_shot
-                )  # TODO: anno file paths for additional shots #FIXME: how does it make sure it won't sample duplicate file from last loop?
+                )  # TODO: anno file paths for additional shots
                 num_objs = 0
                 for s in shots_c:
-                    if (
-                        s not in c_data
-                    ):  # FIXME: does this comparison make sense?? c_data contains image file path, while s is annotation file path
+                    if s not in c_data:
                         tree = ET.parse(s)
                         file = tree.find("filename").text  # contains suffix
                         year = tree.find("folder").text

@@ -19,6 +19,7 @@ from .builtin_meta import _get_builtin_metadata
 from .meta_coco import register_meta_coco
 from .meta_lvis import register_meta_lvis
 from .meta_pascal_voc import register_meta_pascal_voc
+from .meta_mvtec_style_voc import register_meta_mvtec_style_voc
 
 # ==== Predefined datasets and splits for COCO ==========
 
@@ -229,7 +230,7 @@ def register_all_pascal_voc(root="datasets"):
     for prefix in [
         "all",
         "novel",
-    ]:  # FIXME: why no "base"? (Because you either fine-tune with all classes or just novel classes)
+    ]:  # why no "base"? (Because you either fine-tune with all classes or just novel classes)
         for sid in range(1, 4):  # TODO: "sid" means split id
             for shot in [1, 2, 3, 5, 10]:
                 for year in [2007, 2012]:
@@ -241,7 +242,7 @@ def register_all_pascal_voc(root="datasets"):
                             year, prefix, sid, shot, seed
                         )
                         dirname = "VOC{}".format(year)
-                        img_file = "{}_{}shot_split_{}_trainval".format(
+                        file_split = "{}_{}shot_split_{}_trainval".format(
                             prefix, shot, sid
                         )
                         keepclasses = (
@@ -250,12 +251,12 @@ def register_all_pascal_voc(root="datasets"):
                             else "novel{}".format(sid)
                         )
                         METASPLITS.append(
-                            (name, dirname, img_file, keepclasses, sid)
+                            (name, dirname, file_split, keepclasses, sid)
                         )
                         ###TODO: few-shot example
                         # name: voc_2007_trainval_novel1_3shot_seed10
                         # dirname: VOC2007
-                        # img_file: novel_3shot_split_1_trainval
+                        # file_split: novel_3shot_split_1_trainval
                         # keepclasses: novel1
                         # sid: 1
                         ###
@@ -274,7 +275,89 @@ def register_all_pascal_voc(root="datasets"):
         MetadataCatalog.get(name).evaluator_type = "pascal_voc"
 
 
+# FIXME: update accordingly
+# ==== Predefined splits for MVTEC in voc style ===========
+def register_all_mvtec_style_voc(root="datasets"):
+    # register meta datasets
+    METASPLITS = [
+        ("voc_2007_trainval_base1", "VOC2007", "trainval", "base1", 1),
+        ("voc_2007_trainval_base2", "VOC2007", "trainval", "base2", 2),
+        ("voc_2007_trainval_base3", "VOC2007", "trainval", "base3", 3),
+        ("voc_2012_trainval_base1", "VOC2012", "trainval", "base1", 1),
+        ("voc_2012_trainval_base2", "VOC2012", "trainval", "base2", 2),
+        ("voc_2012_trainval_base3", "VOC2012", "trainval", "base3", 3),
+        ("voc_2007_trainval_all1", "VOC2007", "trainval", "base_novel_1", 1),
+        ("voc_2007_trainval_all2", "VOC2007", "trainval", "base_novel_2", 2),
+        ("voc_2007_trainval_all3", "VOC2007", "trainval", "base_novel_3", 3),
+        ("voc_2012_trainval_all1", "VOC2012", "trainval", "base_novel_1", 1),
+        ("voc_2012_trainval_all2", "VOC2012", "trainval", "base_novel_2", 2),
+        ("voc_2012_trainval_all3", "VOC2012", "trainval", "base_novel_3", 3),
+        ("voc_2007_test_base1", "VOC2007", "test", "base1", 1),
+        ("voc_2007_test_base2", "VOC2007", "test", "base2", 2),
+        ("voc_2007_test_base3", "VOC2007", "test", "base3", 3),
+        ("voc_2007_test_novel1", "VOC2007", "test", "novel1", 1),
+        ("voc_2007_test_novel2", "VOC2007", "test", "novel2", 2),
+        ("voc_2007_test_novel3", "VOC2007", "test", "novel3", 3),
+        ("voc_2007_test_all1", "VOC2007", "test", "base_novel_1", 1),
+        ("voc_2007_test_all2", "VOC2007", "test", "base_novel_2", 2),
+        ("voc_2007_test_all3", "VOC2007", "test", "base_novel_3", 3),
+    ]
+
+    # register small meta datasets for "fine-tuning stage"
+    for prefix in [
+        "all",
+        "novel",
+    ]:  # why no "base"? (Because you either fine-tune with all classes or just novel classes)
+        for sid in range(1, 4):  # TODO: "sid" means split id
+            for shot in [1, 2, 3, 5, 10]:
+                for year in [2007, 2012]:
+                    for seed in range(100):
+                        seed = (
+                            "" if seed == 0 else "_seed{}".format(seed)
+                        )  # TODO: for seed0, don't need suffix
+                        name = "voc_{}_trainval_{}{}_{}shot{}".format(
+                            year, prefix, sid, shot, seed
+                        )  # FIXME: let's keep the name unchanged for the moment
+                        dirname = "VOC{}".format(year)
+                        file_split = "{}_{}shot_split_{}_trainval".format(
+                            prefix, shot, sid
+                        )
+                        keepclasses = (
+                            "base_novel_{}".format(sid)
+                            if prefix == "all"
+                            else "novel{}".format(sid)
+                        )
+                        METASPLITS.append(
+                            (name, dirname, file_split, keepclasses, sid)
+                        )
+                        ###TODO: few-shot example
+                        # name: voc_2007_trainval_novel1_3shot_seed10
+                        # dirname: VOC2007
+                        # file_split: novel_3shot_split_1_trainval
+                        # keepclasses: novel1
+                        # sid: 1
+                        ###
+
+    for name, dirname, split, keepclasses, sid in METASPLITS:
+        year = 2007 if "2007" in name else 2012
+        register_meta_mvtec_style_voc(
+            name,
+            _get_builtin_metadata("mvtec_fewshot_style_voc"),  # FIXME: check
+            os.path.join(root, dirname),
+            split,
+            year,
+            keepclasses,
+            sid,
+        )
+        MetadataCatalog.get(
+            name
+        ).evaluator_type = (
+            "pascal_voc"  # FIXME: check if should keep unchanged
+        )
+
+
 # Register them all under "./datasets"
 register_all_coco()
 register_all_lvis()
 register_all_pascal_voc()
+register_all_mvtec_style_voc()
