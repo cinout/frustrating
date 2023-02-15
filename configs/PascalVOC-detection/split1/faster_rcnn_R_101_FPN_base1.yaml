@@ -11,7 +11,7 @@ INPUT:
   MIN_SIZE_TEST: 800
 DATASETS:
   TRAIN: ('voc_2007_trainval_base1', 'voc_2012_trainval_base1')
-  TEST: ('voc_2007_test_base1',)
+  # FIXME: TEST: ('voc_2007_test_base1',)
 SOLVER:
   STEPS: (12000, 16000)
   MAX_ITER: 280 # 17.4 epochs FIXME: change back to 18000
