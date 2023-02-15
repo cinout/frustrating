@@ -278,30 +278,30 @@ def register_all_pascal_voc(root="datasets"):
 # FIXME: update accordingly
 # ==== Predefined splits for MVTEC in voc style ===========
 def register_all_mvtec_style_voc(root="datasets"):
-    # register meta datasets
-    METASPLITS = [
-        ("voc_2007_trainval_base1", "VOC2007", "trainval", "base1", 1),
-        ("voc_2007_trainval_base2", "VOC2007", "trainval", "base2", 2),
-        ("voc_2007_trainval_base3", "VOC2007", "trainval", "base3", 3),
-        ("voc_2012_trainval_base1", "VOC2012", "trainval", "base1", 1),
-        ("voc_2012_trainval_base2", "VOC2012", "trainval", "base2", 2),
-        ("voc_2012_trainval_base3", "VOC2012", "trainval", "base3", 3),
-        ("voc_2007_trainval_all1", "VOC2007", "trainval", "base_novel_1", 1),
-        ("voc_2007_trainval_all2", "VOC2007", "trainval", "base_novel_2", 2),
-        ("voc_2007_trainval_all3", "VOC2007", "trainval", "base_novel_3", 3),
-        ("voc_2012_trainval_all1", "VOC2012", "trainval", "base_novel_1", 1),
-        ("voc_2012_trainval_all2", "VOC2012", "trainval", "base_novel_2", 2),
-        ("voc_2012_trainval_all3", "VOC2012", "trainval", "base_novel_3", 3),
-        ("voc_2007_test_base1", "VOC2007", "test", "base1", 1),
-        ("voc_2007_test_base2", "VOC2007", "test", "base2", 2),
-        ("voc_2007_test_base3", "VOC2007", "test", "base3", 3),
-        ("voc_2007_test_novel1", "VOC2007", "test", "novel1", 1),
-        ("voc_2007_test_novel2", "VOC2007", "test", "novel2", 2),
-        ("voc_2007_test_novel3", "VOC2007", "test", "novel3", 3),
-        ("voc_2007_test_all1", "VOC2007", "test", "base_novel_1", 1),
-        ("voc_2007_test_all2", "VOC2007", "test", "base_novel_2", 2),
-        ("voc_2007_test_all3", "VOC2007", "test", "base_novel_3", 3),
-    ]
+    # # register meta datasets
+    # METASPLITS = [
+    #     ("voc_2007_trainval_base1", "VOC2007", "trainval", "base1", 1),
+    #     ("voc_2007_trainval_base2", "VOC2007", "trainval", "base2", 2),
+    #     ("voc_2007_trainval_base3", "VOC2007", "trainval", "base3", 3),
+    #     ("voc_2012_trainval_base1", "VOC2012", "trainval", "base1", 1),
+    #     ("voc_2012_trainval_base2", "VOC2012", "trainval", "base2", 2),
+    #     ("voc_2012_trainval_base3", "VOC2012", "trainval", "base3", 3),
+    #     ("voc_2007_trainval_all1", "VOC2007", "trainval", "base_novel_1", 1),
+    #     ("voc_2007_trainval_all2", "VOC2007", "trainval", "base_novel_2", 2),
+    #     ("voc_2007_trainval_all3", "VOC2007", "trainval", "base_novel_3", 3),
+    #     ("voc_2012_trainval_all1", "VOC2012", "trainval", "base_novel_1", 1),
+    #     ("voc_2012_trainval_all2", "VOC2012", "trainval", "base_novel_2", 2),
+    #     ("voc_2012_trainval_all3", "VOC2012", "trainval", "base_novel_3", 3),
+    #     ("voc_2007_test_base1", "VOC2007", "test", "base1", 1),
+    #     ("voc_2007_test_base2", "VOC2007", "test", "base2", 2),
+    #     ("voc_2007_test_base3", "VOC2007", "test", "base3", 3),
+    #     ("voc_2007_test_novel1", "VOC2007", "test", "novel1", 1),
+    #     ("voc_2007_test_novel2", "VOC2007", "test", "novel2", 2),
+    #     ("voc_2007_test_novel3", "VOC2007", "test", "novel3", 3),
+    #     ("voc_2007_test_all1", "VOC2007", "test", "base_novel_1", 1),
+    #     ("voc_2007_test_all2", "VOC2007", "test", "base_novel_2", 2),
+    #     ("voc_2007_test_all3", "VOC2007", "test", "base_novel_3", 3),
+    # ]
 
     # register small meta datasets for "fine-tuning stage"
     for prefix in [
