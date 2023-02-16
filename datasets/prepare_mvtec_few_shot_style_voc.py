@@ -148,7 +148,8 @@ def generate_seeds(args):
             num_objs = 0
             for s in shots_c:
                 print("=================")
-                print(s, c_data)
+                print(f"s: {s}")
+                print(f"c_data: {c_data}")
                 if s not in c_data:
                     tree = ET.parse(s)
                     file = tree.find("filename").text  # contains suffix
