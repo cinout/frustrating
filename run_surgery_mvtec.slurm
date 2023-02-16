@@ -26,7 +26,7 @@ conda activate frust
 python3 -m tools.ckpt_surgery \
 	--src1 checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_base/model_final.pth \
 	--method randinit \
-	--save-dir checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_all
+	--save-dir checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_all \
 	--mvtec
 
 ##Log this job's resource usage stats###
