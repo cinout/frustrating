@@ -23,8 +23,8 @@ module purge
 eval "$(conda shell.bash hook)"
 conda activate frust
 
-python3 -m tools.train_net --num-gpus 4 \ 
-	--config-file configs/MVTEC-detection/faster_rcnn_R_101_FPN_ft_all_1shot.yaml \ 
+python3 -m tools.train_net --num-gpus 4 \
+	--config-file configs/MVTEC-detection/faster_rcnn_R_101_FPN_ft_all_1shot.yaml \
 	--opts MODEL.WEIGHTS checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_all/model_reset_surgery.pt
 
 ##Log this job's resource usage stats###
