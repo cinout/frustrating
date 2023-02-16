@@ -26,7 +26,7 @@ conda activate frust
 python3 -m demo.demo --config-file configs/MVTEC-detection/faster_rcnn_R_101_FPN_ft_all_1shot.yaml \
   --input mvtec_novel_images_for_demo/breakfast_box/079.png mvtec_novel_images_for_demo/breakfast_box/088.png mvtec_novel_images_for_demo/breakfast_box/097.png mvtec_novel_images_for_demo/breakfast_box/140.png mvtec_novel_images_for_demo/breakfast_box/223.png \
   --output mvtec_novel_demo_result \
-  --opts MODEL.WEIGHTS checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_ft_normalized_all_1shot_randnovel/model_final.pth \
+  --opts MODEL.WEIGHTS checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_ft_normalized_all_1shot_randnovel/model_0000999.pth \
 
 ##Log this job's resource usage stats###
 my-job-stats -a -n -s
