@@ -29,6 +29,7 @@ datasets/vocsplit
 datasets/lvis
 datasets/lvissplit
 datasets/*/seed*
+datasets/MVTEC
 
 # configs
 configs/Test

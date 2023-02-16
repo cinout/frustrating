@@ -11,9 +11,9 @@ __all__ = ["register_meta_mvtec_style_voc"]
 # FIXME: update more shots and more classes
 mvtec_matadata = {
     "1shot": {
-        "breakfast_box": {
-            "images": ["breakfast_box_train_006.png"],
-            "annotation": "annotations_breakfast_box.json",
+        "mvtec_breakfast_box": {
+            "images": ["mvtec_breakfast_box_train_006.png"],
+            "annotation": "annotations_mvtec_breakfast_box.json",
         }
     }
 }
@@ -52,7 +52,7 @@ def load_mvtec_instances(name: str, dirname: str, split: str, classnames: str):
                 if shot == "1":
                     dataset_dir = os.path.join(dataset_dir, "1shot")
                     fileids[cls] = {
-                        **mvtec_matadata["1shot"]["breakfast_box"],
+                        **mvtec_matadata["1shot"]["mvtec_breakfast_box"],
                         **{"dataset_dir": dataset_dir},
                     }
                 else:
