@@ -27,6 +27,8 @@ class VisualizationDemo(object):
             if len(cfg.DATASETS.TEST)
             else "__unused"  # FIXME: changed from TEST to TRAIN
         )
+        print("_______all classes_________")
+        print(self.metadata.get("thing_classes", None))
         self.cpu_device = torch.device("cpu")
         self.instance_mode = instance_mode
 
