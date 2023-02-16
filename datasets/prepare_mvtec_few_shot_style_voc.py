@@ -139,34 +139,24 @@ def generate_seeds(args):
     # we don't care seeds here, refer to prepare_pascol_xxx.py if you want to use different seeds
     random.seed(0)
     for c in data_per_cat.keys():  # TODO: for each classname
-        c_data = []
-        for j, shot in enumerate(shots):  # TODO: for each shot number
-            diff_shot = shots[j] - shots[j - 1] if j != 0 else 1
+        for shot in shots:  # TODO: for each shot number
+            c_data = []
+            # diff_shot = shots[j] - shots[j - 1] if j != 0 else 1
             shots_c = random.sample(
-                data_per_cat[c], diff_shot
+                data_per_cat[c], shot
             )  # TODO: anno file paths for additional shots
-            num_objs = 0
+
             for s in shots_c:
-                print("=================")
-                print(f"s: {s}")
-                print(f"c_data: {c_data}")
-                if s not in c_data:
-                    tree = ET.parse(s)
-                    file = tree.find("filename").text  # contains suffix
-                    name = "datasets/mvtec/JPEGImages/{}".format(
-                        file
-                    )  # TODO: image file path
-                    c_data.append(name)
-                    for obj in tree.findall("object"):
-                        if (
-                            obj.find("name").text == c
-                        ):  # count objects for current class
-                            num_objs += 1
-                    if num_objs >= diff_shot:
-                        break
-            result[c][shot] = copy.deepcopy(
-                c_data
-            )  # TODO: image file paths by (1) classname (2) #shot
+                tree = ET.parse(s)
+                file = tree.find("filename").text  # contains suffix
+                name = "datasets/mvtec/JPEGImages/{}".format(
+                    file
+                )  # TODO: image file path
+                c_data.append(name)
+
+            result[c][
+                shot
+            ] = c_data  # TODO: image file paths by (1) classname (2) #shot
 
     save_path = "datasets/mvtecsplit"
     os.makedirs(save_path, exist_ok=True)
