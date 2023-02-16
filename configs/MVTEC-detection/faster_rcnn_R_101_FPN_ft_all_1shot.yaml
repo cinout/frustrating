@@ -22,7 +22,7 @@ SOLVER:
   IMS_PER_BATCH: 16
   BASE_LR: 0.001
   STEPS: (3000,)
-  MAX_ITER: 4000
-  CHECKPOINT_PERIOD: 500
+  MAX_ITER: 10000
+  CHECKPOINT_PERIOD: 1000
   WARMUP_ITERS: 0
 OUTPUT_DIR: "checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_ft_normalized_all_1shot_randnovel"
