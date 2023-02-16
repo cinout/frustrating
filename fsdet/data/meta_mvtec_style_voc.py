@@ -8,16 +8,6 @@ from fsdet.utils.file_io import PathManager
 
 __all__ = ["register_meta_mvtec_style_voc"]
 
-# FIXME: update more shots and more classes
-# mvtec_matadata = {
-#     "1shot": {
-#         "mvtec_breakfast_box": {
-#             "images": ["mvtec_breakfast_box_train_006.png"],
-#             "annotation": "annotations_mvtec_breakfast_box.json",
-#         }
-#     }
-# }
-
 
 def load_mvtec_instances(name: str, dirname: str, split: str, classnames: str):
     """
@@ -161,8 +151,7 @@ def load_mvtec_instances(name: str, dirname: str, split: str, classnames: str):
 
 
 def register_meta_mvtec_style_voc(name, metadata, dirname, split, keepclasses):
-    # TODO: split: one of train/test/val/trainval/novel_3shot_split_1_trainval(fine-tune), only used in base training
-    # FIXME: let's keep "dirname" same as in pascal voc
+    # TODO: split: only used in base training (train/test/val/trainval)
     if keepclasses.startswith("base_novel"):
         thing_classes = metadata["thing_classes"]
     elif keepclasses.startswith("base"):
@@ -170,7 +159,6 @@ def register_meta_mvtec_style_voc(name, metadata, dirname, split, keepclasses):
     elif keepclasses.startswith("novel"):
         thing_classes = metadata["novel_classes"]
 
-    # FIXME: check how DatasetCatalog and MetadataCatalog are utilized in repository
     # TODO: register dataset (step 1)
     DatasetCatalog.register(
         name,  # TODO: name of dataset, this will be used in the config file
@@ -183,7 +171,6 @@ def register_meta_mvtec_style_voc(name, metadata, dirname, split, keepclasses):
     MetadataCatalog.get(name).set(
         thing_classes=thing_classes,
         dirname=dirname,
-        # year=year, #FIXME: check if this causes trouble
         split=split,
         base_classes=metadata["base_classes"],
         novel_classes=metadata["novel_classes"],

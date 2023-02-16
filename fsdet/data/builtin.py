@@ -275,11 +275,10 @@ def register_all_pascal_voc(root="datasets"):
         MetadataCatalog.get(name).evaluator_type = "pascal_voc"
 
 
-# FIXME: update accordingly
+# FIXME: create other dataset styles
 # ==== Predefined splits for MVTEC in voc style ===========
 def register_all_mvtec_style_voc(root="datasets"):
     # register meta datasets
-    # FIXME: update
     METASPLITS = [
         ("mvtec_trainval_base", "mvtec", "trainval", "base"),
     ]
@@ -289,18 +288,15 @@ def register_all_mvtec_style_voc(root="datasets"):
         "all",
         "novel",
     ]:  # why no "base"? (Because you either fine-tune with all classes or just novel classes)
-        # FIXME: no split id, we only use one split
         # for shot in [1, 2, 3, 5, 10]: #FIXME: just use 1 shot for now
         for shot in [1]:
             # for year in [2007, 2012]:
-            # FIXME: just seed 0 for now
+            # TODO: just seed 0 for now
             for seed in range(1):
                 seed = (
                     "" if seed == 0 else "_seed{}".format(seed)
                 )  # TODO: for seed0, don't need suffix
-                name = "mvtec_trainval_{}_{}shot{}".format(
-                    prefix, shot, seed
-                )  # FIXME: changed from "voc" to "mvtec"
+                name = "mvtec_trainval_{}_{}shot{}".format(prefix, shot, seed)
                 dirname = "mvtec"
                 file_split = "{}_{}shot_trainval".format(prefix, shot)
                 keepclasses = "base_novel" if prefix == "all" else "novel"
@@ -316,7 +312,7 @@ def register_all_mvtec_style_voc(root="datasets"):
         # year = 2007 if "2007" in name else 2012
         register_meta_mvtec_style_voc(
             name,
-            _get_builtin_metadata("mvtec_fewshot_style_voc"),  # FIXME: check
+            _get_builtin_metadata("mvtec_fewshot_style_voc"),
             os.path.join(root, dirname),
             file_split,
             # year,
@@ -326,7 +322,7 @@ def register_all_mvtec_style_voc(root="datasets"):
         MetadataCatalog.get(
             name
         ).evaluator_type = (
-            "pascal_voc"  # FIXME: check if should keep unchanged
+            "pascal_voc"
         )
 
 

@@ -25,7 +25,7 @@ class VisualizationDemo(object):
         self.metadata = MetadataCatalog.get(
             cfg.DATASETS.TRAIN[0]
             if len(cfg.DATASETS.TEST)
-            else "__unused"  # FIXME: changed from TEST to TRAIN
+            else "__unused"  # TODO: changed from TEST to TRAIN
         )
         print("_______all classes_________")
         print(self.metadata.get("thing_classes", None))

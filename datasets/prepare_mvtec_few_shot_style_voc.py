@@ -137,7 +137,7 @@ def generate_seeds(args):
     shots = [1]
     # shots = [1, 2, 3, 5, 10] #FIXME: just one shot so far, change later
 
-    # FIXME: we don't care seeds here, refer to prepare_pascol_xxx.py if you want to use different seeds
+    # we don't care seeds here, refer to prepare_pascol_xxx.py if you want to use different seeds
     random.seed(0)
     for c in data_per_cat.keys():  # TODO: for each classname
         c_data = []

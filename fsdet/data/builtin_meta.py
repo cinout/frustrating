@@ -516,7 +516,6 @@ def _get_pascal_voc_fewshot_instances_meta():
     return ret
 
 
-# FIXME: create mvtec meta
 def _get_mvtec_fewshot_instances_meta_style_voc():
     ret = {
         "thing_classes": MVTEC_ALL_CATEGORIES_STYLE_VOC,
