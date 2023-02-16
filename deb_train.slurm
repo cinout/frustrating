@@ -1,9 +1,9 @@
 #!/bin/bash
 
-###SBATCH --partition=gpu-a100
+#SBATCH --partition=gpu-a100
 
-#SBATCH --partition=deeplearn
-#SBATCH --qos=gpgpudeeplearn
+###SBATCH --partition=deeplearn
+###SBATCH --qos=gpgpudeeplearn
 ###SBATCH --constraint=dlg1
 
 #SBATCH --job-name="deb_train"
