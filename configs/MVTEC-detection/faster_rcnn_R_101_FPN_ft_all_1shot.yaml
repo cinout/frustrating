@@ -16,7 +16,7 @@ INPUT:
   MIN_SIZE_TRAIN: (480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800)
   MIN_SIZE_TEST: 800
 DATASETS:
-  TRAIN: ('mvtec_2007_trainval_all1_1shot',) #FIXME: why not 2012 part?
+  TRAIN: ('mvtec_trainval_all_1shot',) #FIXME: update
   TEST: ('voc_2007_test_base1',) # FIXME: we don't care about test part
 SOLVER:
   IMS_PER_BATCH: 16

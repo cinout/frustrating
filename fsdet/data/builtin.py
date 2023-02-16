@@ -281,78 +281,47 @@ def register_all_mvtec_style_voc(root="datasets"):
     # register meta datasets
     # FIXME: update
     METASPLITS = [
-        ("mvtec_2007_trainval_base1", "VOC2007", "trainval", "base1", 1),
-        ("mvtec_2012_trainval_base1", "VOC2012", "trainval", "base1", 1),
+        ("mvtec_trainval_base", "mvtec", "trainval", "base"),
     ]
-    # METASPLITS = [
-    #     ("voc_2007_trainval_base1", "VOC2007", "trainval", "base1", 1),
-    #     ("voc_2007_trainval_base2", "VOC2007", "trainval", "base2", 2),
-    #     ("voc_2007_trainval_base3", "VOC2007", "trainval", "base3", 3),
-    #     ("voc_2012_trainval_base1", "VOC2012", "trainval", "base1", 1),
-    #     ("voc_2012_trainval_base2", "VOC2012", "trainval", "base2", 2),
-    #     ("voc_2012_trainval_base3", "VOC2012", "trainval", "base3", 3),
-    #     ("voc_2007_trainval_all1", "VOC2007", "trainval", "base_novel_1", 1),
-    #     ("voc_2007_trainval_all2", "VOC2007", "trainval", "base_novel_2", 2),
-    #     ("voc_2007_trainval_all3", "VOC2007", "trainval", "base_novel_3", 3),
-    #     ("voc_2012_trainval_all1", "VOC2012", "trainval", "base_novel_1", 1),
-    #     ("voc_2012_trainval_all2", "VOC2012", "trainval", "base_novel_2", 2),
-    #     ("voc_2012_trainval_all3", "VOC2012", "trainval", "base_novel_3", 3),
-    #     ("voc_2007_test_base1", "VOC2007", "test", "base1", 1),
-    #     ("voc_2007_test_base2", "VOC2007", "test", "base2", 2),
-    #     ("voc_2007_test_base3", "VOC2007", "test", "base3", 3),
-    #     ("voc_2007_test_novel1", "VOC2007", "test", "novel1", 1),
-    #     ("voc_2007_test_novel2", "VOC2007", "test", "novel2", 2),
-    #     ("voc_2007_test_novel3", "VOC2007", "test", "novel3", 3),
-    #     ("voc_2007_test_all1", "VOC2007", "test", "base_novel_1", 1),
-    #     ("voc_2007_test_all2", "VOC2007", "test", "base_novel_2", 2),
-    #     ("voc_2007_test_all3", "VOC2007", "test", "base_novel_3", 3),
-    # ]
 
     # register small meta datasets for "fine-tuning stage"
     for prefix in [
         "all",
         "novel",
     ]:  # why no "base"? (Because you either fine-tune with all classes or just novel classes)
-        for sid in range(1, 4):  # TODO: "sid" means split id
-            for shot in [1, 2, 3, 5, 10]:
-                for year in [2007, 2012]:
-                    for seed in range(100):
-                        seed = (
-                            "" if seed == 0 else "_seed{}".format(seed)
-                        )  # TODO: for seed0, don't need suffix
-                        name = "mvtec_{}_trainval_{}{}_{}shot{}".format(
-                            year, prefix, sid, shot, seed
-                        )  # FIXME: changed from "voc" to "mvtec"
-                        dirname = "VOC{}".format(year)
-                        file_split = "{}_{}shot_split_{}_trainval".format(
-                            prefix, shot, sid
-                        )
-                        keepclasses = (
-                            "base_novel_{}".format(sid)
-                            if prefix == "all"
-                            else "novel{}".format(sid)
-                        )
-                        METASPLITS.append(
-                            (name, dirname, file_split, keepclasses, sid)
-                        )
-                        ###TODO: few-shot example
-                        # name: voc_2007_trainval_novel1_3shot_seed10
-                        # dirname: VOC2007
-                        # file_split: novel_3shot_split_1_trainval
-                        # keepclasses: novel1
-                        # sid: 1
-                        ###
+        # FIXME: no split id, we only use one split
+        # for shot in [1, 2, 3, 5, 10]: #FIXME: just use 1 shot for now
+        for shot in [1]:
+            # for year in [2007, 2012]:
+            # FIXME: just seed 0 for now
+            for seed in range(1):
+                seed = (
+                    "" if seed == 0 else "_seed{}".format(seed)
+                )  # TODO: for seed0, don't need suffix
+                name = "mvtec_trainval_{}_{}shot{}".format(
+                    prefix, shot, seed
+                )  # FIXME: changed from "voc" to "mvtec"
+                dirname = "mvtec"
+                file_split = "{}_{}shot_trainval".format(prefix, shot)
+                keepclasses = "base_novel" if prefix == "all" else "novel"
+                METASPLITS.append((name, dirname, file_split, keepclasses))
+                ###TODO: few-shot example
+                # name: mvtec_trainval_all_1shot
+                # dirname: mvtec
+                # file_split: all_1shot_trainval
+                # keepclasses: all
+                ###
 
-    for name, dirname, split, keepclasses, sid in METASPLITS:
-        year = 2007 if "2007" in name else 2012
+    for name, dirname, file_split, keepclasses in METASPLITS:
+        # year = 2007 if "2007" in name else 2012
         register_meta_mvtec_style_voc(
             name,
             _get_builtin_metadata("mvtec_fewshot_style_voc"),  # FIXME: check
             os.path.join(root, dirname),
-            split,
-            year,
+            file_split,
+            # year,
             keepclasses,
-            sid,
+            # sid,
         )
         MetadataCatalog.get(
             name

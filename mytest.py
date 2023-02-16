@@ -4,5 +4,8 @@ import json
 import tempfile
 
 
-for thresh in range(50, 100, 5):
-    print(thresh)
+fileid = "mvtc_fdsa"
+
+aa = fileid + (".png" if fileid.startswith("mvtec") else ".jpg")
+
+print(aa)

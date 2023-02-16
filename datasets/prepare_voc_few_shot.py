@@ -56,12 +56,10 @@ def generate_seeds(args):
                 diff_shot = shots[j] - shots[j - 1] if j != 0 else 1
                 shots_c = random.sample(
                     data_per_cat[c], diff_shot
-                )  # TODO: anno file paths for additional shots #FIXME: how does it make sure it won't sample duplicate file from last loop?
+                )  # TODO: anno file paths for additional shots
                 num_objs = 0
                 for s in shots_c:
-                    if (
-                        s not in c_data
-                    ):  # FIXME: does this comparison make sense?? c_data contains image file path, while s is annotation file path
+                    if s not in c_data:
                         tree = ET.parse(s)
                         file = tree.find("filename").text  # contains suffix
                         year = tree.find("folder").text
