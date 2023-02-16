@@ -50,6 +50,9 @@ def parse_args():
     # Dataset
     parser.add_argument("--coco", action="store_true", help="For COCO models")
     parser.add_argument("--lvis", action="store_true", help="For LVIS models")
+    parser.add_argument(
+        "--mvtec", action="store_true", help="For MVTEC models"
+    )
     args = parser.parse_args()
     return args
 
@@ -273,6 +276,8 @@ if __name__ == "__main__":
         ALL_CLASSES = sorted(BASE_CLASSES + NOVEL_CLASSES)
         IDMAP = {v: i for i, v in enumerate(ALL_CLASSES)}
         TAR_SIZE = 1230
+    elif args.mvtec:
+        TAR_SIZE = 24  # FIXME: add more classes
     else:
         # VOC
         TAR_SIZE = 20

@@ -460,33 +460,21 @@ MVTEC_ALL_CATEGORIES_STYLE_VOC = {
 
 MVTEC_NOVEL_CATEGORIES_STYLE_VOC = {
     1: [
-        "bird",
-        "bus",
-        "cow",
-        "motorbike",
-        "sofa",  # FIXME: update categories
+        # FIXME: update categories
         "nectarine",
         "orange",
         "cereal",
         "almond_mix",
     ],
     2: [
-        "aeroplane",
-        "bottle",
-        "cow",
-        "horse",
-        "sofa",  # FIXME: update categories
+        # FIXME: update categories
         "nectarine",
         "orange",
         "cereal",
         "almond_mix",
     ],
     3: [
-        "boat",
-        "cat",
-        "motorbike",
-        "sheep",
-        "sofa",  # FIXME: update categories
+        # FIXME: update categories
         "nectarine",
         "orange",
         "cereal",
@@ -511,6 +499,11 @@ MVTEC_BASE_CATEGORIES_STYLE_VOC = {
         "sheep",
         "train",
         "tvmonitor",
+        "bird",
+        "bus",
+        "cow",
+        "motorbike",
+        "sofa",
     ],
     2: [
         "bicycle",
@@ -528,6 +521,11 @@ MVTEC_BASE_CATEGORIES_STYLE_VOC = {
         "sheep",
         "train",
         "tvmonitor",
+        "aeroplane",
+        "bottle",
+        "cow",
+        "horse",
+        "sofa",
     ],
     3: [
         "aeroplane",
@@ -545,6 +543,11 @@ MVTEC_BASE_CATEGORIES_STYLE_VOC = {
         "pottedplant",
         "train",
         "tvmonitor",
+        "boat",
+        "cat",
+        "motorbike",
+        "sheep",
+        "sofa",
     ],
 }
 

@@ -279,7 +279,11 @@ def register_all_pascal_voc(root="datasets"):
 # ==== Predefined splits for MVTEC in voc style ===========
 def register_all_mvtec_style_voc(root="datasets"):
     # register meta datasets
-    METASPLITS = []
+    # FIXME: update
+    METASPLITS = [
+        ("mvtec_2007_trainval_base1", "VOC2007", "trainval", "base1", 1),
+        ("mvtec_2012_trainval_base1", "VOC2012", "trainval", "base1", 1),
+    ]
     # METASPLITS = [
     #     ("voc_2007_trainval_base1", "VOC2007", "trainval", "base1", 1),
     #     ("voc_2007_trainval_base2", "VOC2007", "trainval", "base2", 2),
