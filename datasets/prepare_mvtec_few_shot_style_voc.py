@@ -134,8 +134,7 @@ def generate_seeds(args):
             )  # all annotation file paths by classname
 
     result = {cls: {} for cls in data_per_cat.keys()}
-    shots = [1]
-    # shots = [1, 2, 3, 5, 10] #FIXME: just one shot so far, change later
+    shots = [1, 2, 3, 5]  # FIXME: change later [1, 2, 3, 5, 10]
 
     # we don't care seeds here, refer to prepare_pascol_xxx.py if you want to use different seeds
     random.seed(0)

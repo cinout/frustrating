@@ -288,8 +288,7 @@ def register_all_mvtec_style_voc(root="datasets"):
         "all",
         "novel",
     ]:  # why no "base"? (Because you either fine-tune with all classes or just novel classes)
-        # for shot in [1, 2, 3, 5, 10]: #FIXME: just use 1 shot for now
-        for shot in [1]:
+        for shot in [1, 2, 3, 5]:  # FIXME: change later [1, 2, 3, 5, 10]
             # for year in [2007, 2012]:
             # TODO: just seed 0 for now
             for seed in range(1):
@@ -319,11 +318,7 @@ def register_all_mvtec_style_voc(root="datasets"):
             keepclasses,
             # sid,
         )
-        MetadataCatalog.get(
-            name
-        ).evaluator_type = (
-            "pascal_voc"
-        )
+        MetadataCatalog.get(name).evaluator_type = "pascal_voc"
 
 
 # Register them all under "./datasets"
