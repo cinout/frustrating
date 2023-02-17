@@ -696,6 +696,9 @@ MVTECCOCO_CATEGORIES = [
     },
     {"color": [250, 141, 255], "isthing": 0, "id": 200, "name": "rug-merged"},
     # FIXME: update with new classes
+    {"color": [250, 141, 255], "isthing": 1, "id": 1000, "name": "nectarine"},
+    {"color": [116, 112, 0], "isthing": 1, "id": 1001, "name": "cereal"},
+    {"color": [64, 170, 64], "isthing": 1, "id": 1002, "name": "almond_mix"},
 ]
 
 # Novel COCO categories
@@ -721,17 +724,23 @@ MVTECCOCO_NOVEL_CATEGORIES = [
     {"color": [0, 182, 199], "isthing": 1, "id": 67, "name": "dining table"},
     {"color": [183, 130, 88], "isthing": 1, "id": 72, "name": "tv"},
     # FIXME: update with new classes
+    {"color": [250, 141, 255], "isthing": 1, "id": 1000, "name": "nectarine"},
+    {"color": [116, 112, 0], "isthing": 1, "id": 1001, "name": "cereal"},
+    {"color": [64, 170, 64], "isthing": 1, "id": 1002, "name": "almond_mix"},
 ]
 
 
 def _get_mvteccoco_instances_meta():
-    # FIXME: update here (haven't touched yet)
-    thing_ids = [k["id"] for k in COCO_CATEGORIES if k["isthing"] == 1]
-    thing_colors = [k["color"] for k in COCO_CATEGORIES if k["isthing"] == 1]
-    assert len(thing_ids) == 80, len(thing_ids)
+    thing_ids = [k["id"] for k in MVTECCOCO_CATEGORIES if k["isthing"] == 1]
+    thing_colors = [
+        k["color"] for k in MVTECCOCO_CATEGORIES if k["isthing"] == 1
+    ]
+    assert len(thing_ids) == 83, len(thing_ids)  # FIXME: update
     # Mapping from the incontiguous COCO category id to an id in [0, 79]
     thing_dataset_id_to_contiguous_id = {k: i for i, k in enumerate(thing_ids)}
-    thing_classes = [k["name"] for k in COCO_CATEGORIES if k["isthing"] == 1]
+    thing_classes = [
+        k["name"] for k in MVTECCOCO_CATEGORIES if k["isthing"] == 1
+    ]
     ret = {
         "thing_dataset_id_to_contiguous_id": thing_dataset_id_to_contiguous_id,
         "thing_classes": thing_classes,
@@ -741,16 +750,15 @@ def _get_mvteccoco_instances_meta():
 
 
 def _get_mvtec_fewshot_instances_meta_style_coco():
-    # FIXME: update here (haven't touched yet)
     ret = _get_mvteccoco_instances_meta()
-    novel_ids = [k["id"] for k in COCO_NOVEL_CATEGORIES if k["isthing"] == 1]
+    novel_ids = [k["id"] for k in MVTECCOCO_NOVEL_CATEGORIES if k["isthing"] == 1]
     novel_dataset_id_to_contiguous_id = {k: i for i, k in enumerate(novel_ids)}
     novel_classes = [
-        k["name"] for k in COCO_NOVEL_CATEGORIES if k["isthing"] == 1
+        k["name"] for k in MVTECCOCO_NOVEL_CATEGORIES if k["isthing"] == 1
     ]
     base_categories = [
         k
-        for k in COCO_CATEGORIES
+        for k in MVTECCOCO_CATEGORIES
         if k["isthing"] == 1 and k["name"] not in novel_classes
     ]
     base_ids = [k["id"] for k in base_categories]

@@ -168,7 +168,11 @@ if __name__ == "__main__":
         88: "teddy bear",
         89: "hair drier",
         90: "toothbrush",
-    }  # FIXME: add our classes
+        # FIXME: add our classes
+        1000: "nectarine",
+        1001: "cereal",
+        1002: "almond_mix",
+    }  
     CLASS2ID = {v: k for k, v in ID2CLASS.items()}  # TODO: {name: id}
 
     args = parse_args()
