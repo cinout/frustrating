@@ -215,12 +215,8 @@ class DefaultPredictor:
         )  # FIXME: changed from TEST to TRAIN
 
         checkpointer = DetectionCheckpointer(self.model)
-        checkpointer.load(cfg.MODEL.WEIGHTS)  # FIXME: change this/?
+        checkpointer.load(cfg.MODEL.WEIGHTS)
 
-        print("=====printing things here=======")
-        print(self.metadata)
-        print(cfg.MODEL.WEIGHTS)
-        
         self.transform_gen = T.ResizeShortestEdge(
             [cfg.INPUT.MIN_SIZE_TEST, cfg.INPUT.MIN_SIZE_TEST],
             cfg.INPUT.MAX_SIZE_TEST,
