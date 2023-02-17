@@ -23,9 +23,7 @@ class VisualizationDemo(object):
                 Useful since the visualization logic can be slow.
         """
         self.metadata = MetadataCatalog.get(
-            cfg.DATASETS.TRAIN[0]
-            if len(cfg.DATASETS.TEST)
-            else "__unused"  # TODO: changed from TEST to TRAIN
+            cfg.DATASETS.TRAIN[0]  # TODO: changed from TEST to TRAIN
         )
         print("_______all classes_________")
         print(self.metadata.get("thing_classes", None))
@@ -37,6 +35,7 @@ class VisualizationDemo(object):
             num_gpu = torch.cuda.device_count()
             self.predictor = AsyncPredictor(cfg, num_gpus=num_gpu)
         else:
+            # TODO: end up here
             self.predictor = DefaultPredictor(cfg)
 
     def run_on_image(self, image):
