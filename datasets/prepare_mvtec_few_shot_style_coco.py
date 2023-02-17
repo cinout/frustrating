@@ -14,7 +14,7 @@ def parse_args():
 
 
 def generate_seeds(args):
-    data_path = "datasets/cocosplit/datasplit/trainvalno5k.json"  # TODO: hard-coded file, found at http://dl.yf.io/fs-det/datasets/cocosplit/datasplit, default COCO annotation format
+    data_path = "datasets/mvtecsplit_cocosstyle/datasplit/trainvalno5k.json"  # TODO: hard-coded file, found at http://dl.yf.io/fs-det/datasets/cocosplit/datasplit, default COCO annotation format
     data = json.load(open(data_path))
 
     new_all_cats = []
@@ -87,6 +87,8 @@ def get_save_path_seeds(cls, shots):
 
 
 if __name__ == "__main__":
+    # FIXME: modify mvtecsplit_cocostyle/datasplit/trainvalno5k.json
+
     ID2CLASS = {
         1: "person",
         2: "bicycle",
@@ -172,7 +174,7 @@ if __name__ == "__main__":
         1000: "nectarine",
         1001: "cereal",
         1002: "almond_mix",
-    }  
+    }
     CLASS2ID = {v: k for k, v in ID2CLASS.items()}  # TODO: {name: id}
 
     args = parse_args()
