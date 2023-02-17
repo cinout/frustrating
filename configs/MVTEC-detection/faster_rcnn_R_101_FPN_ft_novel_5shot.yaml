@@ -5,7 +5,7 @@ MODEL:
   RESNETS:
     DEPTH: 101
   ROI_HEADS:
-    NUM_CLASSES: 24 #FIXME: update
+    NUM_CLASSES: 6 #FIXME: update
     OUTPUT_LAYER: "CosineSimOutputLayers"
     FREEZE_FEAT: True
   BACKBONE:
