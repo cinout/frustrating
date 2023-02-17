@@ -36,16 +36,18 @@ def generate_seeds(args):
 
     random.seed(0)
     for c in ID2CLASS.keys():  # c is class_id
-        img_ids = {}  # TODO: {img_id: anno[]} for class c, anno contains that img_id
+        img_ids = (
+            {}
+        )  # TODO: {img_id: anno[]} for class c, anno contains that img_id
         for a in anno[c]:
             if a["image_id"] in img_ids:
                 img_ids[a["image_id"]].append(a)
             else:
                 img_ids[a["image_id"]] = [a]
 
-        sample_shots = []
-        sample_imgs = []
-        for shots in [1, 2, 3, 5]: # FIXME: change later [1, 2, 3, 5, 10, 30]
+        sample_shots = []  # anno[]
+        sample_imgs = []  # img_meta[]
+        for shots in [1, 2, 3, 5]:  # FIXME: change later [1, 2, 3, 5, 10, 30]
             while True:
                 imgs = random.sample(list(img_ids.keys()), shots)
                 for img in imgs:
@@ -70,15 +72,15 @@ def generate_seeds(args):
                 "images": sample_imgs,
                 "annotations": sample_shots,
             }
-            save_path = get_save_path_seeds(data_path, ID2CLASS[c], shots)
+            save_path = get_save_path_seeds(ID2CLASS[c], shots)
             new_data["categories"] = new_all_cats
             with open(save_path, "w") as f:
                 json.dump(new_data, f)
 
 
-def get_save_path_seeds(path, cls, shots):
+def get_save_path_seeds(cls, shots):
     prefix = "full_box_{}shot_{}_trainval".format(shots, cls)
-    save_dir = os.path.join("datasets", "cocosplit", "seed0")
+    save_dir = os.path.join("datasets", "mvtecsplit_cocostyle")
     os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, prefix + ".json")
     return save_path

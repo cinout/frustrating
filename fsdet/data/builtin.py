@@ -20,52 +20,53 @@ from .meta_coco import register_meta_coco
 from .meta_lvis import register_meta_lvis
 from .meta_pascal_voc import register_meta_pascal_voc
 from .meta_mvtec_style_voc import register_meta_mvtec_style_voc
+from .meta_mvtec_style_coco import register_meta_mvtec_style_coco
 
 # ==== Predefined datasets and splits for COCO ==========
 
-_PREDEFINED_SPLITS_COCO = {}
-_PREDEFINED_SPLITS_COCO["coco"] = {
-    "coco_2014_train": (
-        "coco/train2014",
-        "coco/annotations/instances_train2014.json",
-    ),
-    "coco_2014_val": (
-        "coco/val2014",
-        "coco/annotations/instances_val2014.json",
-    ),
-    "coco_2014_minival": (
-        "coco/val2014",
-        "coco/annotations/instances_minival2014.json",
-    ),
-    "coco_2014_minival_100": (
-        "coco/val2014",
-        "coco/annotations/instances_minival2014_100.json",
-    ),
-    "coco_2014_valminusminival": (
-        "coco/val2014",
-        "coco/annotations/instances_valminusminival2014.json",
-    ),
-    "coco_2017_train": (
-        "coco/train2017",
-        "coco/annotations/instances_train2017.json",
-    ),
-    "coco_2017_val": (
-        "coco/val2017",
-        "coco/annotations/instances_val2017.json",
-    ),
-    "coco_2017_test": (
-        "coco/test2017",
-        "coco/annotations/image_info_test2017.json",
-    ),
-    "coco_2017_test-dev": (
-        "coco/test2017",
-        "coco/annotations/image_info_test-dev2017.json",
-    ),
-    "coco_2017_val_100": (
-        "coco/val2017",
-        "coco/annotations/instances_val2017_100.json",
-    ),
-}
+# _PREDEFINED_SPLITS_COCO = {}
+# _PREDEFINED_SPLITS_COCO["coco"] = {
+#     "coco_2014_train": (
+#         "coco/train2014",
+#         "coco/annotations/instances_train2014.json",
+#     ),
+#     "coco_2014_val": (
+#         "coco/val2014",
+#         "coco/annotations/instances_val2014.json",
+#     ),
+#     "coco_2014_minival": (
+#         "coco/val2014",
+#         "coco/annotations/instances_minival2014.json",
+#     ),
+#     "coco_2014_minival_100": (
+#         "coco/val2014",
+#         "coco/annotations/instances_minival2014_100.json",
+#     ),
+#     "coco_2014_valminusminival": (
+#         "coco/val2014",
+#         "coco/annotations/instances_valminusminival2014.json",
+#     ),
+#     "coco_2017_train": (
+#         "coco/train2017",
+#         "coco/annotations/instances_train2017.json",
+#     ),
+#     "coco_2017_val": (
+#         "coco/val2017",
+#         "coco/annotations/instances_val2017.json",
+#     ),
+#     "coco_2017_test": (
+#         "coco/test2017",
+#         "coco/annotations/image_info_test2017.json",
+#     ),
+#     "coco_2017_test-dev": (
+#         "coco/test2017",
+#         "coco/annotations/image_info_test-dev2017.json",
+#     ),
+#     "coco_2017_val_100": (
+#         "coco/val2017",
+#         "coco/annotations/instances_val2017_100.json",
+#     ),
+# }
 
 
 def register_all_coco(root="datasets"):
@@ -110,6 +111,52 @@ def register_all_coco(root="datasets"):
         register_meta_coco(
             name,
             _get_builtin_metadata("coco_fewshot"),
+            os.path.join(root, imgdir),
+            os.path.join(root, annofile),
+        )
+
+
+def register_all_mvtec_style_coco(root="datasets"):
+    # register meta datasets
+    # FIXME: create folders as this
+    METASPLITS = [
+        (
+            "mvteccoco_trainval_all",
+            "mvteccoco/trainval",
+            "mvtecsplit_cocostyle/datasplit/trainvalno5k.json",
+        ),
+        (
+            "mvteccoco_trainval_base",
+            "mvteccoco/trainval",
+            "mvtecsplit_cocostyle/datasplit/trainvalno5k.json",
+        ),
+        (
+            "mvteccoco_test_all",
+            "mvteccoco/val",
+            "mvtecsplit_cocostyle/datasplit/5k.json",
+        ),
+        (
+            "mvteccoco_test_base",
+            "mvteccoco/val",
+            "mvtecsplit_cocostyle/datasplit/5k.json",
+        ),
+        (
+            "mvteccoco_test_novel",
+            "mvteccoco/val",
+            "mvtecsplit_cocostyle/datasplit/5k.json",
+        ),
+    ]
+
+    # register small meta datasets for fine-tuning stage
+    for prefix in ["all", "novel"]:
+        for shot in [1, 2, 3, 5]:  # FIXME: update later [1, 2, 3, 5, 10, 30]
+            name = "mvteccoco_trainval_{}_{}shot".format(prefix, shot)
+            METASPLITS.append((name, "mvteccoco/trainval", ""))
+
+    for name, imgdir, annofile in METASPLITS:
+        register_meta_mvtec_style_coco(
+            name,
+            _get_builtin_metadata("mvtec_fewshot_style_coco"),
             os.path.join(root, imgdir),
             os.path.join(root, annofile),
         )
@@ -326,3 +373,4 @@ register_all_coco()
 register_all_lvis()
 register_all_pascal_voc()
 register_all_mvtec_style_voc()
+register_all_mvtec_style_coco()
