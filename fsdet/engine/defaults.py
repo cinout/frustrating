@@ -217,6 +217,10 @@ class DefaultPredictor:
         checkpointer = DetectionCheckpointer(self.model)
         checkpointer.load(cfg.MODEL.WEIGHTS)  # FIXME: change this/?
 
+        print("=====printing things here=======")
+        print(self.metadata)
+        print(cfg.MODEL.WEIGHTS)
+        
         self.transform_gen = T.ResizeShortestEdge(
             [cfg.INPUT.MIN_SIZE_TEST, cfg.INPUT.MIN_SIZE_TEST],
             cfg.INPUT.MAX_SIZE_TEST,
