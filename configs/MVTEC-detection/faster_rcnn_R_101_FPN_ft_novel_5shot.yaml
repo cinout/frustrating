@@ -1,6 +1,6 @@
 _BASE_: "../Base-RCNN-FPN.yaml"
 MODEL:
-  WEIGHTS: "checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_all/model_reset_surgery.pt"
+  WEIGHTS: "checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_all/model_reset_remove.pth"
   MASK_ON: False
   RESNETS:
     DEPTH: 101
@@ -16,13 +16,13 @@ INPUT:
   MIN_SIZE_TRAIN: (480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800)
   MIN_SIZE_TEST: 800
 DATASETS:
-  TRAIN: ('mvtec_trainval_all_5shot',)
+  TRAIN: ('mvtec_trainval_novel_5shot',)
   TEST: ('voc_2007_test_base1',) # we don't care about test part
 SOLVER:
   IMS_PER_BATCH: 16
-  BASE_LR: 0.001
+  BASE_LR: 0.01
   STEPS: (3000,)
-  MAX_ITER: 10000
-  CHECKPOINT_PERIOD: 2000
+  MAX_ITER: 3000
+  CHECKPOINT_PERIOD: 3000
   WARMUP_ITERS: 0
-OUTPUT_DIR: "checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_ft_normalized_all_5shot_randnovel"
+OUTPUT_DIR: "checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_ft_novel_5shot"
