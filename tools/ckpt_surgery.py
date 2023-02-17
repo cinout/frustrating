@@ -109,8 +109,6 @@ def combine_ckpts(args):
             return
         weight_name = param_name + (".weight" if is_weight else ".bias")
         pretrained_weight = ckpt["model"][weight_name]
-        print("-----weight 1-----")
-        print(pretrained_weight)
         prev_cls = pretrained_weight.size(0)
         if "cls_score" in param_name:
             prev_cls -= 1
@@ -132,8 +130,6 @@ def combine_ckpts(args):
             new_weight[:prev_cls] = pretrained_weight[:prev_cls]
 
         ckpt2_weight = ckpt2["model"][weight_name]
-        print("-----weight 2-----")
-        print(ckpt2_weight)
         if args.coco or args.lvis:
             for i, c in enumerate(NOVEL_CLASSES):
                 if "cls_score" in param_name:
