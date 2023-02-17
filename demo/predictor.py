@@ -35,7 +35,7 @@ class VisualizationDemo(object):
             num_gpu = torch.cuda.device_count()
             self.predictor = AsyncPredictor(cfg, num_gpus=num_gpu)
         else:
-            # TODO: end up here
+            # end up here
             print("end up here??????")
             self.predictor = DefaultPredictor(cfg)
 
