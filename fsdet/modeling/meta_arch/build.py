@@ -14,6 +14,4 @@ def build_model(cfg):
     Built the whole model, defined by `cfg.MODEL.META_ARCHITECTURE`.
     """
     meta_arch = cfg.MODEL.META_ARCHITECTURE
-    print("-----meta_arch-----")
-    print(meta_arch)
     return META_ARCH_REGISTRY.get(meta_arch)(cfg)
