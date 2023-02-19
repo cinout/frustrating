@@ -118,11 +118,7 @@ def inference_on_dataset(model, data_loader, evaluator, dataset_name):
     num_warmup = min(5, logging_interval - 1, total - 1)
     start_time = time.time()
     total_compute_time = 0
-    print("----- dataset_name -----")
-    print(dataset_name)
     metadata = MetadataCatalog.get(dataset_name)
-    print("----- metadata -----")
-    print(metadata)
     with inference_context(model), torch.no_grad():
         for idx, inputs in enumerate(data_loader):
             if idx == num_warmup:
