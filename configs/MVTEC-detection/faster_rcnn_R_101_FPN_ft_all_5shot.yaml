@@ -17,12 +17,12 @@ INPUT:
   MIN_SIZE_TEST: 800
 DATASETS:
   TRAIN: ('mvtec_trainval_all_5shot',)
-  TEST: ('voc_2007_test_base1',) # we don't care about test part
+  TEST: ('mvtec_test_novel',)
 SOLVER:
   IMS_PER_BATCH: 16
   BASE_LR: 0.001
   STEPS: (3000,)
-  MAX_ITER: 10000
+  MAX_ITER: 50 # FIXME: change back to 10000
   CHECKPOINT_PERIOD: 2000
   WARMUP_ITERS: 0
 OUTPUT_DIR: "checkpoints/mvtec/faster_rcnn/faster_rcnn_R_101_FPN_ft_normalized_all_5shot_randnovel"

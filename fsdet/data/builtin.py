@@ -328,6 +328,7 @@ def register_all_mvtec_style_voc(root="datasets"):
     # register meta datasets
     METASPLITS = [
         ("mvtec_trainval_base", "mvtec", "trainval", "base"),
+        ("mvtec_test_novel", "mvtec", "test", "novel"),
     ]
 
     # register small meta datasets for "fine-tuning stage"

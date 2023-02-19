@@ -49,10 +49,11 @@ def load_mvtec_instances(name: str, dirname: str, split: str, classnames: str):
                     cls
                 ] = fileids_  # TODO: dictionary, with "key" of classname
     else:
-        with PathManager.open(
-            os.path.join(dirname, "ImageSets", "Main", split + ".txt")
-        ) as f:
-            fileids = np.loadtxt(f, dtype=np.str)  # TODO: image file ids
+        if name != "mvtec_test_novel":  # FIXME: update
+            with PathManager.open(
+                os.path.join(dirname, "ImageSets", "Main", split + ".txt")
+            ) as f:
+                fileids = np.loadtxt(f, dtype=np.str)  # TODO: image file ids
 
     dicts = []
     if is_shots:
@@ -108,45 +109,62 @@ def load_mvtec_instances(name: str, dirname: str, split: str, classnames: str):
             dicts.extend(dicts_)
     else:
         # TODO: base training
-        for fileid in fileids:
-            anno_file = os.path.join(dirname, "Annotations", fileid + ".xml")
-            jpeg_file = os.path.join(
-                dirname,
-                "JPEGImages",
-                fileid + (".png" if fileid.startswith("mvtec") else ".jpg"),
-            )
-
-            tree = ET.parse(anno_file)
-
-            r = {
-                "file_name": jpeg_file,
-                "image_id": fileid,
-                "height": int(tree.findall("./size/height")[0].text),
-                "width": int(tree.findall("./size/width")[0].text),
-            }
-            instances = []
-
-            for obj in tree.findall("object"):
-                cls = obj.find("name").text
-                if not (cls in classnames):
-                    continue
-                bbox = obj.find("bndbox")
-                bbox = [
-                    float(bbox.find(x).text)
-                    for x in ["xmin", "ymin", "xmax", "ymax"]
-                ]
-                bbox[0] -= 1.0
-                bbox[1] -= 1.0
-
-                instances.append(
-                    {
-                        "category_id": classnames.index(cls),
-                        "bbox": bbox,
-                        "bbox_mode": BoxMode.XYXY_ABS,
-                    }
+        if name == "mvtec_test_novel":  # FIXME: update
+            test_samples_path = os.path.join(dirname, "mvtec_novel_samples")
+            for file in os.listdir(test_samples_path):
+                file_name = os.path.join(test_samples_path, file)
+                image_id = file.split(".png")[0]
+                r = {
+                    "file_name": file_name,
+                    "image_id": image_id,
+                    "height": int(1280),
+                    "width": int(1600),
+                    "annotations": [],
+                }
+                dicts.append(r)
+        else:
+            for fileid in fileids:
+                anno_file = os.path.join(
+                    dirname, "Annotations", fileid + ".xml"
                 )
-            r["annotations"] = instances
-            dicts.append(r)
+                jpeg_file = os.path.join(
+                    dirname,
+                    "JPEGImages",
+                    fileid
+                    + (".png" if fileid.startswith("mvtec") else ".jpg"),
+                )
+
+                tree = ET.parse(anno_file)
+
+                r = {
+                    "file_name": jpeg_file,
+                    "image_id": fileid,
+                    "height": int(tree.findall("./size/height")[0].text),
+                    "width": int(tree.findall("./size/width")[0].text),
+                }
+                instances = []
+
+                for obj in tree.findall("object"):
+                    cls = obj.find("name").text
+                    if not (cls in classnames):
+                        continue
+                    bbox = obj.find("bndbox")
+                    bbox = [
+                        float(bbox.find(x).text)
+                        for x in ["xmin", "ymin", "xmax", "ymax"]
+                    ]
+                    bbox[0] -= 1.0
+                    bbox[1] -= 1.0
+
+                    instances.append(
+                        {
+                            "category_id": classnames.index(cls),
+                            "bbox": bbox,
+                            "bbox_mode": BoxMode.XYXY_ABS,
+                        }
+                    )
+                r["annotations"] = instances
+                dicts.append(r)
     return dicts
 
 

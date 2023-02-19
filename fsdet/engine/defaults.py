@@ -390,6 +390,7 @@ class DefaultTrainer(SimpleTrainer):
             )
 
         def test_and_save_results():
+            # FIXME: called in evaluation stage of training/fine-tuning
             self._last_eval_results = self.test(self.cfg, self.model)
             return self._last_eval_results
 
@@ -519,6 +520,7 @@ class DefaultTrainer(SimpleTrainer):
 
     @classmethod
     def test(cls, cfg, model, evaluators=None):
+        # FIXME: called in evaluation stage of training/fine-tuning
         """
         Args:
             cfg (CfgNode):
@@ -540,6 +542,7 @@ class DefaultTrainer(SimpleTrainer):
 
         results = OrderedDict()
         for idx, dataset_name in enumerate(cfg.DATASETS.TEST):
+            # FIXME: called in evaluation stage of training/fine-tuning (this is where testing happens)
             data_loader = cls.build_test_loader(cfg, dataset_name)
             # When evaluators are passed in as arguments,
             # implicitly assume that evaluators can be created before data_loader.
@@ -555,7 +558,9 @@ class DefaultTrainer(SimpleTrainer):
                     )
                     results[dataset_name] = {}
                     continue
-            results_i = inference_on_dataset(model, data_loader, evaluator)
+            results_i = inference_on_dataset(
+                model, data_loader, evaluator, dataset_name
+            )
             results[dataset_name] = results_i
             if comm.is_main_process():
                 assert isinstance(

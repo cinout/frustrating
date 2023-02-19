@@ -6,6 +6,8 @@ from contextlib import contextmanager
 
 import torch
 from detectron2.utils.comm import is_main_process
+from detectron2.utils.visualizer import ColorMode, Visualizer
+from detectron2.data import MetadataCatalog
 
 
 class DatasetEvaluator:
@@ -78,7 +80,8 @@ class DatasetEvaluators(DatasetEvaluator):
         return results
 
 
-def inference_on_dataset(model, data_loader, evaluator):
+def inference_on_dataset(model, data_loader, evaluator, dataset_name):
+    # FIXME: called in evaluation stage of training/fine-tuning
     """
     Run model on the data_loader and evaluate the metrics with evaluator.
     The model will be used in eval mode.
@@ -113,6 +116,9 @@ def inference_on_dataset(model, data_loader, evaluator):
     num_warmup = min(5, logging_interval - 1, total - 1)
     start_time = time.time()
     total_compute_time = 0
+    metadata = MetadataCatalog.get(dataset_name)
+    print("------ metadata ------")
+    print(metadata)
     with inference_context(model), torch.no_grad():
         for idx, inputs in enumerate(data_loader):
             if idx == num_warmup:
@@ -123,7 +129,24 @@ def inference_on_dataset(model, data_loader, evaluator):
             outputs = model(inputs)
             torch.cuda.synchronize()
             total_compute_time += time.time() - start_compute_time
-            evaluator.process(inputs, outputs)
+
+            # FIXME: update code here to give visual outputs
+            print("------ inputs ------")
+            print(inputs)
+            print("------ outputs ------")
+            print(outputs)
+
+
+            # visualizer = Visualizer(
+            #     image, metadata, instance_mode=ColorMode.IMAGE
+            # )
+            # if "instances" in outputs:
+            #     instances = outputs["instances"].to(torch.device("cpu"))
+            #     vis_output = visualizer.draw_instance_predictions(
+            #         predictions=instances
+            #     )
+
+            # evaluator.process(inputs, outputs) #FIXME: uncomment me
 
             if (idx + 1) % logging_interval == 0:
                 duration = time.time() - start_time
@@ -159,7 +182,7 @@ def inference_on_dataset(model, data_loader, evaluator):
         )
     )
 
-    results = evaluator.evaluate()
+    # results = evaluator.evaluate()  #FIXME: uncomment me
     # An evaluator may return None when not in main process.
     # Replace it by an empty dict instead to make it easier for downstream code to handle
     if results is None:
