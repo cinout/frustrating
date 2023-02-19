@@ -3,6 +3,4 @@ from collections import defaultdict
 import json
 import tempfile
 
-aa = ["fds"]
-
-aa[5]
+print(os.path.basename("dataset/images/fgsdg.png"))
