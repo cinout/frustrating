@@ -17,7 +17,7 @@ INPUT:
   MIN_SIZE_TEST: 800
 DATASETS:
   TRAIN: ('mvtec_trainval_all_5shot',)
-  TEST: ('mvtec_test_novel',)
+  TEST: ('mvtec_test_all',)
 SOLVER:
   IMS_PER_BATCH: 16
   BASE_LR: 0.001

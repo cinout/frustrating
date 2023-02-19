@@ -49,7 +49,7 @@ def load_mvtec_instances(name: str, dirname: str, split: str, classnames: str):
                     cls
                 ] = fileids_  # TODO: dictionary, with "key" of classname
     else:
-        if name != "mvtec_test_novel":  # FIXME: update
+        if name != "mvtec_test_all":  # FIXME: update
             with PathManager.open(
                 os.path.join(dirname, "ImageSets", "Main", split + ".txt")
             ) as f:
@@ -109,7 +109,7 @@ def load_mvtec_instances(name: str, dirname: str, split: str, classnames: str):
             dicts.extend(dicts_)
     else:
         # TODO: base training
-        if name == "mvtec_test_novel":  # FIXME: update
+        if name == "mvtec_test_all":  # FIXME: update
             test_samples_path = os.path.join(dirname, "mvtec_novel_samples")
             for file in os.listdir(test_samples_path):
                 file_name = os.path.join(test_samples_path, file)
