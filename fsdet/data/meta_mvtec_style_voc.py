@@ -190,6 +190,7 @@ def register_meta_mvtec_style_voc(name, metadata, dirname, split, keepclasses):
         thing_classes=thing_classes,
         dirname=dirname,
         split=split,
+        year=2007,
         base_classes=metadata["base_classes"],
         novel_classes=metadata["novel_classes"],
     )
