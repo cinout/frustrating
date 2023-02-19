@@ -145,7 +145,9 @@ def inference_on_dataset(model, data_loader, evaluator, dataset_name):
                     )
 
                 vis_output.save(
-                    os.path.join("test_vis_output", os.path.basename(input["file_name"]))
+                    os.path.join(
+                        "test_vis_output", os.path.basename(input["file_name"])
+                    )
                 )
 
             # evaluator.process(inputs, outputs) #FIXME: uncomment me
@@ -185,6 +187,7 @@ def inference_on_dataset(model, data_loader, evaluator, dataset_name):
     )
 
     # results = evaluator.evaluate()  #FIXME: uncomment me
+    results = OrderedDict()
     results["bbox"].update(
         {
             "AP": 0.5,
