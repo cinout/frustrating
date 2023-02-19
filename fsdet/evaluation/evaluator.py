@@ -188,13 +188,11 @@ def inference_on_dataset(model, data_loader, evaluator, dataset_name):
 
     # results = evaluator.evaluate()  #FIXME: uncomment me
     results = OrderedDict()
-    results["bbox"].update(
-        {
-            "AP": 0.5,
-            "AP50": 0.5,
-            "AP75": 0.5,
-        }
-    )
+    results["bbox"] = {
+        "AP": 0.5,
+        "AP50": 0.5,
+        "AP75": 0.5,
+    }
     # An evaluator may return None when not in main process.
     # Replace it by an empty dict instead to make it easier for downstream code to handle
     if results is None:
