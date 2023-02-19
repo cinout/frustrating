@@ -145,7 +145,7 @@ def inference_on_dataset(model, data_loader, evaluator, dataset_name):
                     )
 
                 vis_output.save(
-                    os.path.join("test_vis_output", os.path.basename(image))
+                    os.path.join("test_vis_output", os.path.basename(input["file_name"]))
                 )
 
             # evaluator.process(inputs, outputs) #FIXME: uncomment me
