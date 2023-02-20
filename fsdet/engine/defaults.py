@@ -212,7 +212,7 @@ class DefaultPredictor:
         self.model.eval()
         self.metadata = MetadataCatalog.get(
             cfg.DATASETS.TRAIN[0]
-        )  # FIXME: changed from TEST to TRAIN
+        )  # FIXME: changed from TEST to TRAIN (when run demo)
 
         checkpointer = DetectionCheckpointer(self.model)
         checkpointer.load(cfg.MODEL.WEIGHTS)

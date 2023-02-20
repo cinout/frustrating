@@ -117,8 +117,10 @@ def load_mvtec_instances(name: str, dirname: str, split: str, classnames: str):
                 r = {
                     "file_name": file_name,
                     "image_id": image_id,
-                    "height": int(1280),
-                    "width": int(1600),
+                    "height": int(
+                        1280
+                    ),  # FIXME: update: breakfast:1280, screw:1100
+                    "width": int(1600),  # FIXME: update: breakfast/screw:1600
                     "annotations": [],
                 }
                 dicts.append(r)

@@ -322,7 +322,6 @@ def register_all_pascal_voc(root="datasets"):
         MetadataCatalog.get(name).evaluator_type = "pascal_voc"
 
 
-# FIXME: create other dataset styles
 # ==== Predefined splits for MVTEC in voc style ===========
 def register_all_mvtec_style_voc(root="datasets"):
     # register meta datasets
@@ -346,7 +345,7 @@ def register_all_mvtec_style_voc(root="datasets"):
                 name = "mvtec_trainval_{}_{}shot{}".format(prefix, shot, seed)
                 dirname = "mvtec"
                 file_split = "{}_{}shot_trainval".format(prefix, shot)
-                keepclasses = "base_novel" if prefix == "all" else "novel"
+                keepclasses = "base_novel" if prefix == "all" else "novel" # TODO: where "all" and "novel" decides which classes to use
                 METASPLITS.append((name, dirname, file_split, keepclasses))
                 ###TODO: few-shot example
                 # name: mvtec_trainval_all_1shot
